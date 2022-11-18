@@ -1,7 +1,8 @@
 # author: Tiffany Timbers
 # date: 2019-12-18
 
-"""Downloads data csv data from the web to a local filepath as either a csv or feather file format.
+"""
+Downloads data csv data from the web to a local filepath as either a csv or feather file format.
 Usage: src/get_dataset.py --url=<url> [--out_file_name=<out_file_name>]
 Options:
 --url=<url>              URL from where to download the data (must be in standard csv format)

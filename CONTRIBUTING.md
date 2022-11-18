@@ -10,7 +10,7 @@ We encourage you to explore our project and provide contributions if you would l
 
 ## Code of conduct
 
-We have adopted a code of conduct about what we expect from our contributors. Please visit `TODO` for guidelines about proper actions within this project.
+We have adopted a code of conduct about what we expect from our contributors. Please visit `code-of-conduct.md` for guidelines about proper actions within this project.
 
 ## We are working through GitHub
 

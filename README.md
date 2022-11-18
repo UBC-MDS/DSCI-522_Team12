@@ -30,7 +30,7 @@ python src/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaint
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-Please advise `CONTRIBUTING.mds` for detailed information.
+Please advise `CONTRIBUTING.md` for detailed information.
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.

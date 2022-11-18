@@ -19,6 +19,12 @@ We plan to preprocess the data using natural language processing tools like the 
 
 Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints. We will first split the data into training and test set. In the training set, we will visualize if the class is imbalanced to find the strategy of model building. A visualization determining whether a large number of unique values appear in a column will be created. 
 
+## Accessing the data
+
+You can run the following command in the root directory of this repo to retrieve the data
+```
+python src/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
+```
 
 ## Contributing
 

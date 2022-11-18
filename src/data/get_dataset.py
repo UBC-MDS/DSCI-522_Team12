@@ -45,6 +45,5 @@ def main(url, out_file_name):
         print(req)
     
 
-
 if __name__ == "__main__":
     main(opt["--url"], opt["--out_file_name"])

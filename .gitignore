@@ -1,5 +1,6 @@
-# data files
+# ignore data files
 *.csv
+*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

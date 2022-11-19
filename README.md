@@ -30,6 +30,10 @@ You can run the following command in the root directory of this repo to retrieve
 python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
 ```
 
+## Exploratory Data Analysis
+
+The first attempt to explore our data is in `customer_complaint_eda.ipynb`.
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.

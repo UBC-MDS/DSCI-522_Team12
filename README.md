@@ -23,6 +23,30 @@ We plan to analyze the data using a mix of tabular and natural language processi
 
 Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints. We will first split the data into training and test set. In the training set, we will visualize if the class is imbalanced to find the strategy of model building. A visualization determining whether a large number of unique values appear in a column will be created. 
 
+## Requirements
+
+The requirements for package installation is encompassed in the `requirements.txt` for `pip` users and and `environment.yml` for Conda users.
+
+To set up the environment in Conda run:
+```
+conda env create -n complaints -f environment.yml
+```
+
+Or for `pip`:  
+```
+pip install -r requirements.txt
+```
+
+To update the `environment.yml` file you can run the following command if using a Conda environment:
+```
+conda env export > environment.yml
+```
+
+To output a pip formatted `requirements.txt` use the following command to generate one from a Conda environment:
+
+```
+pip list --format=freeze > requirements.txt
+```
 ## Accessing the data
 
 You can run the following command in the root directory of this repo to retrieve the data

@@ -47,6 +47,7 @@ To output a pip formatted `requirements.txt` use the following command to genera
 ```
 pip list --format=freeze > requirements.txt
 ```
+
 ## Accessing the data
 
 You can run the following command in the root directory of this repo to retrieve the data
@@ -56,7 +57,7 @@ python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/comp
 
 ## Exploratory Data Analysis
 
-The first attempt to explore our data is in `customer_complaint_eda.ipynb`.
+The first attempt to explore our data is in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
 
 ## Contributing
 

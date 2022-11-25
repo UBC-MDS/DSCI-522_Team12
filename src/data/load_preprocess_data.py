@@ -1,21 +1,17 @@
 #!/usr/bin/env python
-"""
-Tools to load and preprocess raw and processed complaints data.
+# author: Ty Andrews
+# date: 2022-11-25
 
-Example use:
-raw_df = load_raw_complaints_data(
-    os.path.join(os.pardir, "data", "raw", "complaints.csv")
-)
-# OR
-raw_df = load_raw_complaints_data(
-    os.path.join(os.pardir, "data", "raw", "complaints.csv"),
-    num_rows = 200000, 
-    skip_rows=100000
-)
+"""This script loads and preprocesses the complaints data and exports to processed data folder.
+
+Usage: load_preprocess_data.py --raw_path=<raw_path> --output_path=<output_path>
+Options:
+--raw_path=<raw_path>       This is the path to the raw complaints data
+--output_path=<output_path> This is the path to where the processed data should be saved
 """
 
+from docopt import docopt
 from typing import Union
-
 import pandas as pd
 
 
@@ -43,6 +39,18 @@ def load_and_preprocess_raw_complaints_data(
     ------
     ValueError
         Incorrect data types passed in for parameters.
+
+    Example
+    -------
+    raw_df = load_raw_complaints_data(
+        os.path.join(os.pardir, "data", "raw", "complaints.csv")
+    )
+    # OR
+    raw_df = load_raw_complaints_data(
+        os.path.join(os.pardir, "data", "raw", "complaints.csv"),
+        num_rows = 200000,
+        skip_rows=100000
+    )
     """
 
     # tell pandas we know there are mixed int/string values in these columns
@@ -83,3 +91,20 @@ def load_and_preprocess_raw_complaints_data(
     )
 
     return raw_complaint_df
+
+
+def main():
+
+    opt = docopt(__doc__)
+    raw_file_path = opt["--raw_path"]
+    output_file_path = opt["--output_path"]
+
+    print("Loading and preprocessing raw complaints data...")
+    preprocessed_df = load_and_preprocess_raw_complaints_data(file_path=raw_file_path)
+    print("Done preprocessing, saving results....")
+    preprocessed_df.to_csv(output_file_path)
+    print(f"Completed preprocessing successfully, data saved to: {output_file_path}")
+
+
+if __name__ == "__main__":
+    main()

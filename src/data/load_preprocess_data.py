@@ -19,7 +19,7 @@ from typing import Union
 import pandas as pd
 
 
-def load_raw_complaints_data(
+def load_and_preprocess_raw_complaints_data(
     file_path: str, num_rows: Union[str, int] = "all", skip_rows: int = 0
 ) -> pd.DataFrame:
     """Reads in complaints data and cleans up names and data types.

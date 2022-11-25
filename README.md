@@ -48,16 +48,34 @@ To output a pip formatted `requirements.txt` use the following command to genera
 pip list --format=freeze > requirements.txt
 ```
 
-## Accessing the data
+## Exploratory Data Analysis (EDA)
 
-You can run the following command in the root directory of this repo to retrieve the data
-```
+The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
+
+## Running Full Analysis Pipeline
+
+To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
+
+Here is how the process works:
+![](reports/analysis-pipeline-overview.png)
+
+Below are all the commands/options you can copy/paste from:
+```bash
+# Accessing and downloading the raw data
 python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
+
+# Cleaning & preprocessing the raw data
+python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
+
+# Generating the EDA results
+
+
+# Running the analysis
+
+
+# Genrating the final report
+
 ```
-
-## Exploratory Data Analysis
-
-The first attempt to explore our data is in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
 
 ## Contributing
 

@@ -1,0 +1,35 @@
+---
+title: "Analysis of Customer Complaints on US Financial Products"
+author:   
+  - Ty Andrews  
+  - Dhruvi Nishar
+  - Luke Yang
+execute: 
+  echo: false
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+  html:
+    toc: true
+    number-sections: true
+    colorlinks: true
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+## Introduction
+
+This a Quarto document. To learn more about Quarto see <https://quarto.org>.
+
+```{r, message=FALSE}
+table_data <- read_csv("./assets/placeholder-data.csv")
+kable(table_data, caption = "Table 1. This is a summary of the data set")
+
+```
+
+# PLOT PLACEHOLDER IMAGE

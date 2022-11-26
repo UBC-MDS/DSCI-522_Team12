@@ -45,10 +45,14 @@ def main(train, out_dir):
     unique_df['columns'] = complaints_df.columns
     unique_df['valid_count'] = complaints_df.count(axis=0).reset_index()[0]
     unique_df['unique_count'] = complaints_df.nunique().reset_index()[0]
+    
+    print("Saving the Table in the \assets\tables folder")
     save_table(unique_df)
+    print("Table Saved")
     
 
     # Plot 1: Missing Values Plot
+    print("Generating missing values plot")
     num_complaints = 2000
     alt.data_transformers.enable('data_server')
     na_val_df = complaints_df.tail(num_complaints).isna().reset_index().melt(
@@ -70,10 +74,14 @@ def main(train, out_dir):
     ).properties(
         width=min(500, complaints_df.tail(num_complaints).shape[0])
     )
+    print("Plot Generated")
+    print("Saving the Missing Values plot")
     missing_vals.save('../reports/assets/missing_values_plot.png')
+    print("Plot saved")
 
 
     # Plot 2: Complaints over time
+    print("Generating complaints over time plot")
     num_complaints = complaints_df.resample(
         "M", on="date_received"
     ).agg({'date_received': 'size'}).rename(
@@ -89,10 +97,13 @@ def main(train, out_dir):
         width = 700,
         height = 400
     )
+    print("Plot generated - now saving it")
     complaints_over_time.save("../reports/assets/complaints_over_time_line.png")
+    print("Plot saved")
 
 
     # Plot 3: Disputed Bar Chart
+    print("Now generating consumer disputed bar chart")
     target = pd.DataFrame(complaints_df.value_counts('consumer_disputed')).reset_index()
     target.columns = ['consumer_disputed','count']
     disputed_cust = alt.Chart(
@@ -106,7 +117,9 @@ def main(train, out_dir):
         width = 600,
         height = 300
     )
+    print("Plot generated - now saving it in the assets folder")
     disputed_cust.save('../reports/assets/disputed_bar.png')
+    print("Plot saved")
   
 
 if __name__ == "__main__":

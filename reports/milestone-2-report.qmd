@@ -57,27 +57,27 @@ A predictive approach using multiple classification models was used to attempt t
 
 Feature pre-processing approach and rationale is as follows:
 
-+------------------------------+--------------------------+--------------------------+
-| Features                     | Preprocessing Step       | Rationale                |
-+==============================+==========================+==========================+
-| consumer_complaint_narrative | CountVectorizer          |                          |
-|                              |                          |                          |
-|                              | max_features = 1000      |                          |
-+------------------------------+--------------------------+--------------------------+
-| product                      | OneHotEncoder            |                          |
-|                              |                          |                          |
-| sub_product                  |                          |                          |
-|                              |                          |                          |
-| issue                        |                          |                          |
-|                              |                          |                          |
-| company_public_response      |                          |                          |
-|                              |                          |                          |
-| company                      |                          |                          |
-|                              |                          |                          |
-| company_response_to_consumer |                          |                          |
-+------------------------------+--------------------------+--------------------------+
-| consumer_consent_provided    | dropped                  |                          |
-+------------------------------+--------------------------+--------------------------+
++------------------------------+---------------------+-----------------+
+| Features                     | Preprocessing Step  | Rationale       |
++==============================+=====================+=================+
+| consumer_complaint_narrative | CountVectorizer     |                 |
+|                              |                     |                 |
+|                              | max_features = 1000 |                 |
++------------------------------+---------------------+-----------------+
+| product                      | OneHotEncoder       |                 |
+|                              |                     |                 |
+| sub_product                  |                     |                 |
+|                              |                     |                 |
+| issue                        |                     |                 |
+|                              |                     |                 |
+| company_public_response      |                     |                 |
+|                              |                     |                 |
+| company                      |                     |                 |
+|                              |                     |                 |
+| company_response_to_consumer |                     |                 |
++------------------------------+---------------------+-----------------+
+| consumer_consent_provided    | dropped             |                 |
++------------------------------+---------------------+-----------------+
 
 : Feature preprocessing for model training.
 
@@ -89,3 +89,12 @@ The results for the different models
 table_data <- read_csv("./assets/placeholder-data.csv")
 kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
 ```
+
+```{r, message=FALSE}
+table_data <- read.csv("./assets/results.csv") 
+names(table_data)[1] <- ''
+  
+  
+kable(table_data, caption = "Table 2. Model Performance and Score.")
+```
+![Figure3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}

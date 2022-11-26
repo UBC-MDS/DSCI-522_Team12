@@ -25,7 +25,7 @@ def save_table(table):
     Args:
         table (pd.dataframe): dataframe to be saved as csv
     """
-    pd.to_csv(f'reports/assets/tables/{table}.csv', index=False)
+    table.to_csv(f'../reports/assets/tables/{table}.csv', index=False)
 
 def main(train, out_dir):
     """
@@ -70,7 +70,7 @@ def main(train, out_dir):
     ).properties(
         width=min(500, complaints_df.tail(num_complaints).shape[0])
     )
-    missing_vals.save('reports/assets/missing_values_plot.png')
+    missing_vals.save('../reports/assets/missing_values_plot.png')
 
 
     # Plot 2: Complaints over time
@@ -89,7 +89,7 @@ def main(train, out_dir):
         width = 700,
         height = 400
     )
-    complaints_over_time.save("reports/assets/complaints_over_time_line.png")
+    complaints_over_time.save("../reports/assets/complaints_over_time_line.png")
 
 
     # Plot 3: Disputed Bar Chart
@@ -106,7 +106,7 @@ def main(train, out_dir):
         width = 600,
         height = 300
     )
-    disputed_cust.save('reports/assets/disputed_bar.png')
+    disputed_cust.save('../reports/assets/disputed_bar.png')
   
 
 if __name__ == "__main__":

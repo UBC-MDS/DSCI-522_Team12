@@ -9,13 +9,9 @@ Options:
 
 # All the imports
 from docopt import docopt
-import requests
 import os
-import time
-import zipfile
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import altair as alt
 
 # reading the docscript for the arguments
@@ -32,6 +28,13 @@ def save_table(table):
     pd.to_csv(f'reports/assets/tables/{table}.csv', index=False)
 
 def main(train, out_dir):
+    """
+    Main function that saves some EDA plots and tables into the assets folder
+
+    Args:
+        train (string): path of the train data
+        out_dir (string): path where the results need to be stored
+    """
     
     if out_dir is None:
         out_dir = "results"
@@ -67,7 +70,7 @@ def main(train, out_dir):
     ).properties(
         width=min(500, complaints_df.tail(num_complaints).shape[0])
     )
-    missing_vals.save('missing_values_plot.png')
+    missing_vals.save('reports/assets/missing_values_plot.png')
 
 
     # Plot 2: Complaints over time
@@ -86,7 +89,7 @@ def main(train, out_dir):
         width = 700,
         height = 400
     )
-    complaints_over_time.save("complaints_over_time_line.png")
+    complaints_over_time.save("reports/assets/complaints_over_time_line.png")
 
 
     # Plot 3: Disputed Bar Chart
@@ -103,7 +106,7 @@ def main(train, out_dir):
         width = 600,
         height = 300
     )
-    disputed_cust.save('disputed_bar.png')
+    disputed_cust.save('reports/assets/disputed_bar.png')
   
 
 if __name__ == "__main__":

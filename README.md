@@ -57,7 +57,7 @@ The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb
 To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
 
 Here is how the process works:
-![](reports/analysis-pipeline-overview.png)
+![](reports/assets/analysis-pipeline-overview.png)
 
 Below are all the commands/options you can copy/paste from:
 ```bash
@@ -74,7 +74,10 @@ python src/analysis/ly_analysis.py --data_filepath=data/processed/preprocessed-c
 
 
 # Genrating the final report
-
+# ON windows where quarto.exe is not found in path from git bash
+quarto.cmd render reports/milestone-2-report.qmd --to html
+# Or on Mac/Linux with Quarto in path
+quarto render reports/milestone-2-report.qmd --to html
 ```
 
 ## Contributing

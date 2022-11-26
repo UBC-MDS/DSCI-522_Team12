@@ -67,6 +67,9 @@ python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/comp
 # Cleaning & preprocessing the raw data
 python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
 
+# Generating Plots and Tables for EDA (DN)
+python src/generate_eda.py --train="data/processed/preprocessed-complaints.csv" --out_dir="reports"
+
 # Generating the EDA results (Luke)
 python src/analysis/ly_analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=data/asset
 

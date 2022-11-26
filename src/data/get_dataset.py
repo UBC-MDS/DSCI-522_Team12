@@ -42,9 +42,11 @@ def main(url, out_file_name):
             zip_ref.extractall(csv_save_path)
         print("Data downloaded using", time.time()-start,'seconds')
         os.remove(zip_path)
+        return 0
     except Exception as req:
         print("An error occurred. Please try again and make sure you are using the correct command")
         print(req)
+        return -1
     
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ British Columbia.
 
 ## Project proposal
 
-We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in in DATA.GOV and it is intended for public access and use. This dataset is a collection of customer complaints regarding their purchased financial products. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response.
+We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in DATA.GOV and it is intended for public access and use. This dataset is a collection of customer complaints regarding their purchased financial products. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response. All the data are in categorical form except for the customer id, which will be dropped during the analysis.
 
 We aim to answer the following inferential and/or predictive questions: 
 - **Can we predict whether a customer is going to dispute based on their complaint and the company's response?** This question may induce inferential sub-questions such as

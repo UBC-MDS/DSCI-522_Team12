@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ty Andrews">
+<meta name="author" content="Dhruvi Nishar">
+<meta name="author" content="Luke Yang">
+
+<title>Analysis of Customer Complaints on US Financial Products</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="milestone-2-report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="milestone-2-report_files/libs/quarto-html/quarto.js"></script>
+<script src="milestone-2-report_files/libs/quarto-html/popper.min.js"></script>
+<script src="milestone-2-report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="milestone-2-report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="milestone-2-report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="milestone-2-report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="milestone-2-report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="milestone-2-report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="milestone-2-report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary"> <span class="header-section-number">1</span> Summary</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"> <span class="header-section-number">2</span> Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"> <span class="header-section-number">3</span> Methods</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"> <span class="header-section-number">3.1</span> Data</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"> <span class="header-section-number">3.2</span> Analysis</a></li>
+  </ul></li>
+  <li><a href="#results-discussion" id="toc-results-discussion" class="nav-link" data-scroll-target="#results-discussion"> <span class="header-section-number">4</span> Results &amp; Discussion</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysis of Customer Complaints on US Financial Products</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ty Andrews </p>
+             <p>Dhruvi Nishar </p>
+             <p>Luke Yang </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="summary" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="summary"><span class="header-section-number">1</span> Summary</h2>
+<p>Here we used multiple classification algorithms to predict whether a financial product consumerwill dispute a complaint made to the Consumer Financial Protection Bureaus’ (CFPB) Customer Complaint Database<span class="citation" data-cites="COMPL_DB">(<a href="#ref-COMPL_DB" role="doc-biblioref"><em>Consumer Complaints Database</em> 2022</a>)</span>.</p>
+</section>
+<section id="introduction" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<p>As of 2022, the CFPB receives over 60,000 consumer complaints a month related to companies financial products. Between December 2011 and November 2022 over 140,000 complaints were disputed by consumers costing both the companies and CFPB time and money.</p>
+</section>
+<section id="methods" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="methods"><span class="header-section-number">3</span> Methods</h2>
+<section id="data" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">3.1</span> Data</h3>
+<p>Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike.</p>
+<p><img src="assets/plot-placeholder-image.png" class="img-fluid" alt="plot"><br>
+</p>
+<p>The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
+<p><img src="assets/plot-placeholder-image.png" class="img-fluid" alt="plot"><br>
+</p>
+<p>Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (~20,000).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Table 1. Unique and missing value counts by data feature.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">column 1</th>
+<th style="text-align: right;">column 2</th>
+<th style="text-align: left;">column 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18.30</td>
+<td style="text-align: left;">HELLO</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">17.40</td>
+<td style="text-align: left;">GOOD BYE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">175.89</td>
+<td style="text-align: left;">AGAIN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="analysis" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">3.2</span> Analysis</h3>
+<p>A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.</p>
+<p>Feature pre-processing approach and rationale is as follows:</p>
+<table class="table">
+<caption>Feature preprocessing for model training.</caption>
+<colgroup>
+<col style="width: 36%">
+<col style="width: 31%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Features</th>
+<th>Preprocessing Step</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>consumer_complaint_narrative</td>
+<td><p>CountVectorizer</p>
+<p>max_features = 1000</p></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><p>product, sub_product</p>
+<p>issue</p>
+<p>company_public_response</p>
+<p>company</p>
+<p>company_response_to_consumer</p></td>
+<td>OneHotEncoder</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>consumer_consent_provided</td>
+<td>dropped</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="results-discussion" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="results-discussion"><span class="header-section-number">4</span> Results &amp; Discussion</h2>
+<p>The results for the different models</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Table 1. Unique and missing value counts by data feature.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">column 1</th>
+<th style="text-align: right;">column 2</th>
+<th style="text-align: left;">column 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18.30</td>
+<td style="text-align: left;">HELLO</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">17.40</td>
+<td style="text-align: left;">GOOD BYE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">175.89</td>
+<td style="text-align: left;">AGAIN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-COMPL_DB" class="csl-entry" role="doc-biblioentry">
+<em>Consumer Complaints Database</em>. 2022. Consumer Financial Protection Bureau. <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data">https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

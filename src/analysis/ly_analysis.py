@@ -14,7 +14,6 @@ import altair as alt
 import pandas as pd
 import warnings
 from docopt import docopt
-from src.data.load_preprocess_data import load_raw_complaints_data
 from sklearn.model_selection import train_test_split
 from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
@@ -34,7 +33,10 @@ def main(data_filepath, out_filepath):
     """
     perform analysis using different models and generate the results
     """
-    complaints_df = load_raw_complaints_data(data_filepath)
+    print('Starting analysis. Note it is OK to see warnings about columns being set to zeros.')
+    print('Loading dataset...')
+    complaints_df = pd.read_csv(data_filepath)
+    complaints_df = complaints_df.iloc[: , 1:]
     complaints_df = complaints_df.query('not consumer_disputed.isnull()')
     complaints_df['consumer_disputed'].replace(['Yes','No'],[1,0], inplace = True)
     drop_features = ['date_received',
@@ -43,11 +45,11 @@ def main(data_filepath, out_filepath):
                     'date_sent_to_company',
                     'complaint_id']
     complaints_df = complaints_df.drop(columns = drop_features).dropna()
-    
+    print('Splitting dataset...')
     train_df, test_df = train_test_split(complaints_df,test_size=0.2, random_state=123)
     
     X_train, y_train = train_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
-    X_test, y_test = test_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
+    # X_test, y_test = test_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
     
     categorical_features = ['product',
                             'sub_product',
@@ -70,37 +72,43 @@ def main(data_filepath, out_filepath):
     preprocessor = make_column_transformer(
         (OneHotEncoder(handle_unknown = 'ignore',
                     drop='if_binary'), categorical_features),
-        (CountVectorizer(stop_words='english', max_features = 1000), text_feature),
+        (CountVectorizer(stop_words='english', max_features = 3000), text_feature),
         ('drop', drop_features))
     scoring_metrics = ['accuracy','recall','precision','f1']
     cross_val_results = {}
     
+    print('Analyzing baseline model...')
     pipe_dc = make_pipeline(preprocessor, DummyClassifier())
     pipe_dc.fit(X_train, y_train)
     cross_val_results['dummy'] = pd.DataFrame(cross_validate(
         pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
     
+    print('Analyzing logistic regression model...')
     pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=1000, class_weight='balanced'))
     cross_val_results['logreg'] = pd.DataFrame(cross_validate(
         pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
     cross_val_results['logreg']
     
+    print('Analyzing naive bayes model...')
     pipe_nb = make_pipeline(preprocessor, BernoulliNB(alpha = 0.1))
     cross_val_results['bayes'] = pd.DataFrame(cross_validate(
         pipe_nb, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
     cross_val_results['bayes']
     
+    print('Analyzing svc model...')
     pipe_svc = make_pipeline(preprocessor, SVC(class_weight='balanced'))
     cross_val_results['svc'] = pd.DataFrame(cross_validate(
         pipe_svc, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
     cross_val_results['svc']
     
+    print('Analyzing random forest model...')
     pipe_rf = make_pipeline(preprocessor, RandomForestClassifier(class_weight='balanced'))
     cross_val_results['random forest'] = pd.DataFrame(cross_validate(
         pipe_rf, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
             
     res = pd.concat(cross_val_results, axis=1)
-    
+    res.columns = res.columns.droplevel(1)
+    print('Saving tabular results...')
     res.to_csv(os.path.join(out_filepath,'results.csv'))
     
     res = res.reset_index()
@@ -108,7 +116,7 @@ def main(data_filepath, out_filepath):
     source = res[2:].melt(id_vars=['index'])
     source.columns = ['Metric','Model','Score']
     source['Metric'] = source['Metric'].str.replace('test_','')
-    
+    print('Generating the plot...')
     alt.Chart(source).mark_bar().encode(
         x='Metric:O',
         y='Score:Q',

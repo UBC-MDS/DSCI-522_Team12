@@ -3,7 +3,7 @@
 
 """
 Downloads data csv data from the web to a local filepath as a csv format.
-Usage: src/get_dataset.py --url=<url> [--out_file_name=<out_file_name>]
+Usage: src/get_dataset.py --url=<url> [--out_filepath=<out_filepath>]
 Options:
 --url=<url>              URL from where to download the data (must be in standard csv format)
 --out_file=<out_file>    Filename of the data, optional
@@ -18,15 +18,15 @@ import zipfile
 opt = docopt(__doc__)
 
 
-def main(url, out_file_name):
+def main(url, out_filepath):
     """
     downloads the data to the data/raw folder
     """
-    
-    if out_file_name is None:
-        out_file_name = 'complaints.zip'
+    filename = 'complaints'
+    if out_filepath is None:
+        out_filepath = os.path.join('data', 'raw', filename)
     try:
-        zip_path = os.path.join('data', 'raw',out_file_name)
+        zip_path = out_filepath+'.zip'
         csv_save_path = os.path.join('data', 'raw')
         print("Pulling from the web")
         start = time.time()
@@ -50,4 +50,4 @@ def main(url, out_file_name):
     
 
 if __name__ == "__main__":
-    main(opt["--url"], opt["--out_file_name"])
+    main(opt["--url"], opt["--out_filepath"])

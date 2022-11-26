@@ -37,6 +37,13 @@ def main(data_filepath, out_filepath):
     print('Loading dataset...')
     complaints_df = pd.read_csv(data_filepath)
     
+    target = pd.DataFrame(complaints_df.value_counts('consumer_disputed')).reset_index()
+    target.columns = ['consumer_disputed','count']
+    alt.Chart(target).mark_bar().encode(
+        x=alt.X('consumer_disputed:O',title = 'Consumer Disputed'),
+        y=alt.Y('count:Q',title = 'Count'),
+        color='consumer_disputed:O',
+    ).save(os.path.join(out_filepath,'class_imbalance.png'))
     unique_df = pd.DataFrame()
     unique_df['columns'] = complaints_df.columns
     unique_df['valid_count'] = complaints_df.count(axis=0).reset_index()[0]
@@ -52,13 +59,6 @@ def main(data_filepath, out_filepath):
                     'date_sent_to_company',
                     'complaint_id']
     complaints_df = complaints_df.drop(columns = drop_features).dropna()
-    target = pd.DataFrame(complaints_df.value_counts('consumer_disputed')).reset_index()
-    target.columns = ['consumer_disputed','count']
-    alt.Chart(target).mark_bar().encode(
-        x=alt.X('consumer_disputed:O',title = 'Consumer Disputed'),
-        y=alt.Y('count:Q',title = 'Count'),
-        color='consumer_disputed:O',
-    ).save(os.path.join(out_filepath,'class_imbalance.png'))
     print('Splitting dataset...')
     train_df, test_df = train_test_split(complaints_df,test_size=0.2, random_state=123)
     

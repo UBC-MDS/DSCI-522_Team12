@@ -36,15 +36,29 @@ def main(data_filepath, out_filepath):
     print('Starting analysis. Note it is OK to see warnings about columns being set to zeros.')
     print('Loading dataset...')
     complaints_df = pd.read_csv(data_filepath)
+    
+    unique_df = pd.DataFrame()
+    unique_df['columns'] = complaints_df.columns
+    unique_df['valid_count'] = complaints_df.count(axis=0).reset_index()[0]
+    unique_df['unique_count'] = complaints_df.nunique().reset_index()[0]
+    unique_df.to_csv(os.path.join(out_filepath,'unique_counts.csv'))
     complaints_df = complaints_df.iloc[: , 1:]
     complaints_df = complaints_df.query('not consumer_disputed.isnull()')
     complaints_df['consumer_disputed'].replace(['Yes','No'],[1,0], inplace = True)
+    
     drop_features = ['date_received',
                     'zip_code',
                     'tags',
                     'date_sent_to_company',
                     'complaint_id']
     complaints_df = complaints_df.drop(columns = drop_features).dropna()
+    target = pd.DataFrame(complaints_df.value_counts('consumer_disputed')).reset_index()
+    target.columns = ['consumer_disputed','count']
+    alt.Chart(target).mark_bar().encode(
+        x=alt.X('consumer_disputed:O',title = 'Consumer Disputed'),
+        y=alt.Y('count:Q',title = 'Count'),
+        color='consumer_disputed:O',
+    ).save(os.path.join(out_filepath,'class_imbalance.png'))
     print('Splitting dataset...')
     train_df, test_df = train_test_split(complaints_df,test_size=0.2, random_state=123)
     

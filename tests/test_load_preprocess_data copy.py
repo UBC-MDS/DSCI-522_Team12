@@ -11,7 +11,7 @@ src_path = cur_dir[
 if src_path not in sys.path:
     sys.path.append(src_path)
 
-from src.data.load_preprocess_data import load_and_preprocess_raw_complaints_data
+from src.data.get_dataset import main
 
 raw_data_path = os.path.join("data", "raw", "complaints.csv")
 

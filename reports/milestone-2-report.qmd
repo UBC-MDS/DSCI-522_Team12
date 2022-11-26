@@ -6,6 +6,7 @@ author:
   - Luke Yang
 execute: 
   echo: false
+bibliography: assets/references.bib
 format:
   pdf:
     toc: true
@@ -22,14 +23,69 @@ library(tidyverse)
 library(knitr)
 ```
 
+## Summary
+
+Here we used multiple classification algorithms to predict whether a financial product consumer will dispute a complaint made to the Consumer Financial Protection Bureaus' (CFPB) Consumer Complaints Database[@COMPL_DB].
+
 ## Introduction
 
-This a Quarto document. To learn more about Quarto see <https://quarto.org>.
+As of 2022, the CFPB receives over 60,000 consumer complaints a month related to companies financial products. Between December 2011 and November 2022 over 140,000 complaints were disputed by consumers costing both the companies and CFPB time and money.
+
+## Methods
+
+### Data
+
+Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike.
+
+![plot](assets/plot-placeholder-image.png)\
+
+The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the \~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.
+
+![plot](assets/plot-placeholder-image.png){alt="plot"}\
+
+Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (\~20,000).
 
 ```{r, message=FALSE}
 table_data <- read_csv("./assets/placeholder-data.csv")
-kable(table_data, caption = "Table 1. This is a summary of the data set")
+kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
 
 ```
 
-# PLOT PLACEHOLDER IMAGE
+### Analysis
+
+A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.
+
+Feature pre-processing approach and rationale is as follows:
+
++------------------------------+--------------------------+--------------------------+
+| Features                     | Preprocessing Step       | Rationale                |
++==============================+==========================+==========================+
+| consumer_complaint_narrative | CountVectorizer          |                          |
+|                              |                          |                          |
+|                              | max_features = 1000      |                          |
++------------------------------+--------------------------+--------------------------+
+| product                      | OneHotEncoder            |                          |
+|                              |                          |                          |
+| sub_product                  |                          |                          |
+|                              |                          |                          |
+| issue                        |                          |                          |
+|                              |                          |                          |
+| company_public_response      |                          |                          |
+|                              |                          |                          |
+| company                      |                          |                          |
+|                              |                          |                          |
+| company_response_to_consumer |                          |                          |
++------------------------------+--------------------------+--------------------------+
+| consumer_consent_provided    | dropped                  |                          |
++------------------------------+--------------------------+--------------------------+
+
+: Feature preprocessing for model training.
+
+## Results & Discussion
+
+The results for the different models
+
+```{r, message=FALSE}
+table_data <- read_csv("./assets/placeholder-data.csv")
+kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
+```

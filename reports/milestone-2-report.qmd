@@ -41,12 +41,12 @@ Complaints can be responded to by the company in multiple ways but each consumer
 
 The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the \~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.
 
-![plot](assets/plot-placeholder-image.png){alt="plot"}\
+![Figure 2. Class Imbalance in the Target Column](assets/class_imbalance.png)\
 
 Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (\~20,000).
 
 ```{r, message=FALSE}
-table_data <- read_csv("./assets/placeholder-data.csv")
+table_data <- read_csv("./assets/unique_counts.csv")|>subset( select = -c(1) )
 kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
 
 ```
@@ -57,38 +57,33 @@ A predictive approach using multiple classification models was used to attempt t
 
 Feature pre-processing approach and rationale is as follows:
 
-+------------------------------+---------------------+-----------------+
-| Features                     | Preprocessing Step  | Rationale       |
-+==============================+=====================+=================+
-| consumer_complaint_narrative | CountVectorizer     |                 |
-|                              |                     |                 |
-|                              | max_features = 1000 |                 |
-+------------------------------+---------------------+-----------------+
-| product                      | OneHotEncoder       |                 |
-|                              |                     |                 |
-| sub_product                  |                     |                 |
-|                              |                     |                 |
-| issue                        |                     |                 |
-|                              |                     |                 |
-| company_public_response      |                     |                 |
-|                              |                     |                 |
-| company                      |                     |                 |
-|                              |                     |                 |
-| company_response_to_consumer |                     |                 |
-+------------------------------+---------------------+-----------------+
-| consumer_consent_provided    | dropped             |                 |
-+------------------------------+---------------------+-----------------+
++------------------------------+------------------------+------------------------------------+
+| Features                     | Preprocessing Step     | Rationale                          |
++==============================+========================+====================================+
+| consumer_complaint_narrative | CountVectorizer        | High Amount of Unique Textual Data |
+|                              |                        |                                    |
+|                              | max_features = 1000    |                                    |
++------------------------------+------------------------+------------------------------------+
+| product                      | OneHotEncoder (Binary) | Two Products Included              |
+|                              |                        |                                    |
+| sub_product                  | OneHotEncoder          | Categorical Values                 |
+|                              |                        |                                    |
+| issue                        | OneHotEncoder          | Categorical Values                 |
+|                              |                        |                                    |
+| company_public_response      | OneHotEncoder          | Categorical Values                 |
+|                              |                        |                                    |
+| company                      | OneHotEncoder          | Categorical Values                 |
+|                              |                        |                                    |
+| company_response_to_consumer | OneHotEncoder          | Categorical Values                 |
++------------------------------+------------------------+------------------------------------+
+| consumer_consent_provided    | dropped                | Single Category                    |
++------------------------------+------------------------+------------------------------------+
 
-: Feature preprocessing for model training.
+: These features were passed into a column transformer, which was then integrated with five different estimator for prediction.
 
 ## Results & Discussion
 
-The results for the different models
-
-```{r, message=FALSE}
-table_data <- read_csv("./assets/placeholder-data.csv")
-kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
-```
+We applied the `DummyClassifier`, `LogisticRegression`, `Naive Bayes`, `SVC`, and `RandomForestClassifier` to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation is presented below:
 
 ```{r, message=FALSE}
 table_data <- read.csv("./assets/results.csv") 
@@ -97,4 +92,15 @@ names(table_data)[1] <- ''
   
 kable(table_data, caption = "Table 2. Model Performance and Score.")
 ```
-![Figure3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}
+
+Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the `DummyClassifier`. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company's perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.
+
+![Figure 3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}
+
+The results above motivates us to choose `LogisticRegression` as the final estimator. It has overall a great f1 score and among the recall is among highest scores. Though we sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
+
+## Conclusion
+
+The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company's response. We processed the features such as the product, consumer's complaints, and company's responses. We trained five different models that optimized the f1 score and chose `LogisticRegression` as a suitable estimator for analysis of this problem.
+
+## References

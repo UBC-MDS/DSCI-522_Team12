@@ -75,6 +75,8 @@ div.csl-indent {
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="toc-section-number">3.2</span>  Analysis</a></li>
   </ul></li>
   <li><a href="#results-discussion" id="toc-results-discussion" class="nav-link" data-scroll-target="#results-discussion"><span class="toc-section-number">4</span>  Results &amp; Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5</span>  Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">6</span>  References</a></li>
   </ul>
 </nav>
 </div>
@@ -120,7 +122,7 @@ div.csl-indent {
 <p><img src="assets/plot-placeholder-image.png" class="img-fluid" alt="plot"><br>
 </p>
 <p>The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
-<p><img src="assets/plot-placeholder-image.png" class="img-fluid" alt="plot"><br>
+<p><img src="assets/class_imbalance.png" class="img-fluid" alt="Figure 2. Class Imbalance in the Target Column"><br>
 </p>
 <p>Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (~20,000).</p>
 <div class="cell">
@@ -129,26 +131,106 @@ div.csl-indent {
 <caption>Table 1. Unique and missing value counts by data feature.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: right;">column 1</th>
-<th style="text-align: right;">column 2</th>
-<th style="text-align: left;">column 3</th>
+<th style="text-align: left;">columns</th>
+<th style="text-align: right;">valid_count</th>
+<th style="text-align: right;">unique_count</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">18.30</td>
-<td style="text-align: left;">HELLO</td>
+<td style="text-align: left;">Unnamed: 0</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">3084450</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">17.40</td>
-<td style="text-align: left;">GOOD BYE</td>
+<td style="text-align: left;">date_received</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">4003</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">product</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub_product</td>
+<td style="text-align: right;">2849156</td>
+<td style="text-align: right;">76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">issue</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">165</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub_issue</td>
+<td style="text-align: right;">2401899</td>
+<td style="text-align: right;">221</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">consumer_complaint_narrative</td>
+<td style="text-align: right;">1107253</td>
+<td style="text-align: right;">967541</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">company_public_response</td>
+<td style="text-align: right;">1339720</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">company</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">6565</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">state</td>
+<td style="text-align: right;">3044459</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">zip_code</td>
+<td style="text-align: right;">3043948</td>
+<td style="text-align: right;">34429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tags</td>
+<td style="text-align: right;">350065</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">175.89</td>
-<td style="text-align: left;">AGAIN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">consumer_consent_provided</td>
+<td style="text-align: right;">2264772</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">submitted_via</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">date_sent_to_company</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">3952</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">company_response_to_consumer</td>
+<td style="text-align: right;">3084446</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">timely_response</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">consumer_disputed</td>
+<td style="text-align: right;">768443</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">complaint_id</td>
+<td style="text-align: right;">3084450</td>
+<td style="text-align: right;">3084450</td>
 </tr>
 </tbody>
 </table>
@@ -160,11 +242,11 @@ div.csl-indent {
 <p>A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.</p>
 <p>Feature pre-processing approach and rationale is as follows:</p>
 <table class="table">
-<caption>Feature preprocessing for model training.</caption>
+<caption>These features were passed into a column transformer, which was then integrated with five different estimator for prediction.</caption>
 <colgroup>
-<col style="width: 43%">
-<col style="width: 30%">
-<col style="width: 25%">
+<col style="width: 32%">
+<col style="width: 26%">
+<col style="width: 39%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -178,7 +260,7 @@ div.csl-indent {
 <td>consumer_complaint_narrative</td>
 <td><p>CountVectorizer</p>
 <p>max_features = 1000</p></td>
-<td></td>
+<td>High Amount of Unique Textual Data</td>
 </tr>
 <tr class="even">
 <td><p>product</p>
@@ -187,13 +269,23 @@ div.csl-indent {
 <p>company_public_response</p>
 <p>company</p>
 <p>company_response_to_consumer</p></td>
-<td>OneHotEncoder</td>
-<td></td>
+<td><p>OneHotEncoder (Binary)</p>
+<p>OneHotEncoder</p>
+<p>OneHotEncoder</p>
+<p>OneHotEncoder</p>
+<p>OneHotEncoder</p>
+<p>OneHotEncoder</p></td>
+<td><p>Two Products Included</p>
+<p>Categorical Values</p>
+<p>Categorical Values</p>
+<p>Categorical Values</p>
+<p>Categorical Values</p>
+<p>Categorical Values</p></td>
 </tr>
 <tr class="odd">
 <td>consumer_consent_provided</td>
 <td>dropped</td>
-<td></td>
+<td>Single Category</td>
 </tr>
 </tbody>
 </table>
@@ -201,38 +293,7 @@ div.csl-indent {
 </section>
 <section id="results-discussion" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="results-discussion"><span class="header-section-number">4</span> Results &amp; Discussion</h2>
-<p>The results for the different models</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<caption>Table 1. Unique and missing value counts by data feature.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">column 1</th>
-<th style="text-align: right;">column 2</th>
-<th style="text-align: left;">column 3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">18.30</td>
-<td style="text-align: left;">HELLO</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">17.40</td>
-<td style="text-align: left;">GOOD BYE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">175.89</td>
-<td style="text-align: left;">AGAIN</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p>We applied the <code>DummyClassifier</code>, <code>LogisticRegression</code>, <code>Naive Bayes</code>, <code>SVC</code>, and <code>RandomForestClassifier</code> to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation is presented below:</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -250,19 +311,19 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fit_time</td>
-<td style="text-align: right;">1.718</td>
-<td style="text-align: right;">9.357</td>
-<td style="text-align: right;">2.490</td>
-<td style="text-align: right;">170.751</td>
-<td style="text-align: right;">33.682</td>
+<td style="text-align: right;">1.195</td>
+<td style="text-align: right;">6.370</td>
+<td style="text-align: right;">1.500</td>
+<td style="text-align: right;">135.491</td>
+<td style="text-align: right;">23.744</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">score_time</td>
-<td style="text-align: right;">0.384</td>
-<td style="text-align: right;">0.703</td>
-<td style="text-align: right;">0.507</td>
-<td style="text-align: right;">34.795</td>
-<td style="text-align: right;">0.865</td>
+<td style="text-align: right;">0.311</td>
+<td style="text-align: right;">0.382</td>
+<td style="text-align: right;">0.345</td>
+<td style="text-align: right;">22.075</td>
+<td style="text-align: right;">0.510</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_accuracy</td>
@@ -270,7 +331,7 @@ div.csl-indent {
 <td style="text-align: right;">0.655</td>
 <td style="text-align: right;">0.702</td>
 <td style="text-align: right;">0.679</td>
-<td style="text-align: right;">0.783</td>
+<td style="text-align: right;">0.784</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_recall</td>
@@ -278,7 +339,7 @@ div.csl-indent {
 <td style="text-align: right;">0.455</td>
 <td style="text-align: right;">0.342</td>
 <td style="text-align: right;">0.445</td>
-<td style="text-align: right;">0.053</td>
+<td style="text-align: right;">0.054</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_precision</td>
@@ -286,7 +347,7 @@ div.csl-indent {
 <td style="text-align: right;">0.309</td>
 <td style="text-align: right;">0.332</td>
 <td style="text-align: right;">0.331</td>
-<td style="text-align: right;">0.617</td>
+<td style="text-align: right;">0.628</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_f1</td>
@@ -294,22 +355,31 @@ div.csl-indent {
 <td style="text-align: right;">0.368</td>
 <td style="text-align: right;">0.337</td>
 <td style="text-align: right;">0.380</td>
-<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">0.099</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<p>Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the <code>DummyClassifier</code>. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company’s perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/model_performance.png" class="img-fluid figure-img" alt="Performance of Different Models on Different Metrics"></p>
-<p></p><figcaption class="figure-caption">Figure3: Performance of Different Models on Different Metrics</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 3: Performance of Different Models on Different Metrics</figcaption><p></p>
 </figure>
 </div>
+<p>The results above motivates us to choose <code>LogisticRegression</code> as the final estimator. It has overall a great f1 score and among the recall is among highest scores. Though we sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved. We also see that <code>SVC</code> gives slightly higher scores than <code>LogisticRegression</code>; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose <code>LogisticRegression</code> over <code>SVC</code> due to its scalability and interpretability.</p>
+</section>
+<section id="conclusion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>
+<p>The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company’s response. We processed the features such as the product, consumer’s complaints, and company’s responses. We trained five different models that optimized the f1 score and chose <code>LogisticRegression</code> as a suitable estimator for analysis of this problem.</p>
+</section>
+<section id="references" class="level2 unnumbered" data-number="6">
+
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">6 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-COMPL_DB" class="csl-entry" role="doc-biblioentry">
 <em>Consumer Complaints Database</em>. 2022. Consumer Financial Protection Bureau. <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data">https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data</a>.
 </div>

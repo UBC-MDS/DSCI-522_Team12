@@ -67,16 +67,16 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary"><span class="toc-section-number">1</span>  Summary</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="toc-section-number">2</span>  Introduction</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="toc-section-number">3</span>  Methods</a>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary"><span class="toc-section-number">0.1</span>  Summary</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="toc-section-number">0.2</span>  Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="toc-section-number">0.3</span>  Methods</a>
   <ul class="collapse">
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="toc-section-number">3.1</span>  Data</a></li>
-  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="toc-section-number">3.2</span>  Analysis</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="toc-section-number">0.3.1</span>  Data</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="toc-section-number">0.3.2</span>  Analysis</a></li>
   </ul></li>
-  <li><a href="#results-discussion" id="toc-results-discussion" class="nav-link" data-scroll-target="#results-discussion"><span class="toc-section-number">4</span>  Results &amp; Discussion</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5</span>  Conclusion</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">6</span>  References</a></li>
+  <li><a href="#results-discussion" id="toc-results-discussion" class="nav-link" data-scroll-target="#results-discussion"><span class="toc-section-number">0.4</span>  Results &amp; Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">0.5</span>  Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">1</span>  References</a></li>
   </ul>
 </nav>
 </div>
@@ -106,24 +106,32 @@ div.csl-indent {
 
 </header>
 
-<section id="summary" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="summary"><span class="header-section-number">1</span> Summary</h2>
+<section id="summary" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">0.1</span> Summary</h2>
 <p>Here we used multiple classification algorithms to predict whether a financial product consumer will dispute a complaint made to the Consumer Financial Protection Bureaus’ (CFPB) Consumer Complaints Database<span class="citation" data-cites="COMPL_DB">(<a href="#ref-COMPL_DB" role="doc-biblioref"><em>Consumer Complaints Database</em> 2022</a>)</span>.</p>
 </section>
-<section id="introduction" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">0.2</span> Introduction</h2>
 <p>As of 2022, the CFPB receives over 60,000 consumer complaints a month related to companies financial products. Between December 2011 and November 2022 over 140,000 complaints were disputed by consumers costing both the companies and CFPB time and money.</p>
+<p>Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike. Especially, as we observed that the number of complaints spikes near 2022 (Figure 1), it is essential to understand the tactics of handling these complaints.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figure 1. Complaints Over Timeline</figcaption><p></p>
+<p><img src="assets/complaints_over_time_line.png" class="img-fluid figure-img" alt="Figure 1. Complaints Over Timeline"></p>
+</figure>
+</div>
 </section>
-<section id="methods" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="methods"><span class="header-section-number">3</span> Methods</h2>
-<section id="data" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">3.1</span> Data</h3>
-<p>Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike.</p>
-<p><img src="assets/plot-placeholder-image.png" class="img-fluid" alt="plot"><br>
-</p>
-<p>The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
-<p><img src="assets/class_imbalance.png" class="img-fluid" alt="Figure 2. Class Imbalance in the Target Column"><br>
-</p>
+<section id="methods" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="methods"><span class="header-section-number">0.3</span> Methods</h2>
+<section id="data" class="level3" data-number="0.3.1">
+<h3 data-number="0.3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">0.3.1</span> Data</h3>
+<p>We used pandas<span class="citation" data-cites="pandas">(<a href="#ref-pandas" role="doc-biblioref">McKinney 2010</a>)</span>, scikit-learn<span class="citation" data-cites="scikit-learn">(<a href="#ref-scikit-learn" role="doc-biblioref">Pedregosa et al. 2011</a>)</span>, and TidyVerse <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> to collect, analyze, and summarize our data. The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figure 2. Class Imbalance in the Target Column</figcaption><p></p>
+<p><img src="assets/disputed_bar.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (~20,000).</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -237,8 +245,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="analysis" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">3.2</span> Analysis</h3>
+<section id="analysis" class="level3" data-number="0.3.2">
+<h3 data-number="0.3.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">0.3.2</span> Analysis</h3>
 <p>A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.</p>
 <p>Feature pre-processing approach and rationale is as follows:</p>
 <table class="table">
@@ -291,8 +299,8 @@ div.csl-indent {
 </table>
 </section>
 </section>
-<section id="results-discussion" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="results-discussion"><span class="header-section-number">4</span> Results &amp; Discussion</h2>
+<section id="results-discussion" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="results-discussion"><span class="header-section-number">0.4</span> Results &amp; Discussion</h2>
 <p>We applied the <code>DummyClassifier</code>, <code>LogisticRegression</code>, <code>Naive Bayes</code>, <code>SVC</code>, and <code>RandomForestClassifier</code> to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation is presented below:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -311,19 +319,19 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fit_time</td>
-<td style="text-align: right;">1.195</td>
-<td style="text-align: right;">6.370</td>
-<td style="text-align: right;">1.500</td>
-<td style="text-align: right;">135.491</td>
-<td style="text-align: right;">23.744</td>
+<td style="text-align: right;">0.978</td>
+<td style="text-align: right;">5.475</td>
+<td style="text-align: right;">1.674</td>
+<td style="text-align: right;">123.556</td>
+<td style="text-align: right;">22.726</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">score_time</td>
-<td style="text-align: right;">0.311</td>
-<td style="text-align: right;">0.382</td>
-<td style="text-align: right;">0.345</td>
-<td style="text-align: right;">22.075</td>
-<td style="text-align: right;">0.510</td>
+<td style="text-align: right;">0.257</td>
+<td style="text-align: right;">0.431</td>
+<td style="text-align: right;">0.369</td>
+<td style="text-align: right;">24.588</td>
+<td style="text-align: right;">0.592</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_accuracy</td>
@@ -339,7 +347,7 @@ div.csl-indent {
 <td style="text-align: right;">0.455</td>
 <td style="text-align: right;">0.342</td>
 <td style="text-align: right;">0.445</td>
-<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">0.056</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_precision</td>
@@ -347,7 +355,7 @@ div.csl-indent {
 <td style="text-align: right;">0.309</td>
 <td style="text-align: right;">0.332</td>
 <td style="text-align: right;">0.331</td>
-<td style="text-align: right;">0.628</td>
+<td style="text-align: right;">0.631</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_f1</td>
@@ -355,7 +363,7 @@ div.csl-indent {
 <td style="text-align: right;">0.368</td>
 <td style="text-align: right;">0.337</td>
 <td style="text-align: right;">0.380</td>
-<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">0.102</td>
 </tr>
 </tbody>
 </table>
@@ -364,24 +372,33 @@ div.csl-indent {
 <p>Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the <code>DummyClassifier</code>. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company’s perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/model_performance.png" class="img-fluid figure-img" alt="Performance of Different Models on Different Metrics"></p>
 <p></p><figcaption class="figure-caption">Figure 3: Performance of Different Models on Different Metrics</figcaption><p></p>
+<p><img src="assets/model_performance.png" class="img-fluid figure-img" alt="Performance of Different Models on Different Metrics"></p>
 </figure>
 </div>
 <p>The results above motivates us to choose <code>LogisticRegression</code> as the final estimator. It has overall a great f1 score and among the recall is among highest scores. Though we sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved. We also see that <code>SVC</code> gives slightly higher scores than <code>LogisticRegression</code>; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose <code>LogisticRegression</code> over <code>SVC</code> due to its scalability and interpretability.</p>
 </section>
-<section id="conclusion" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">0.5</span> Conclusion</h2>
 <p>The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company’s response. We processed the features such as the product, consumer’s complaints, and company’s responses. We trained five different models that optimized the f1 score and chose <code>LogisticRegression</code> as a suitable estimator for analysis of this problem.</p>
 </section>
-<section id="references" class="level2 unnumbered" data-number="6">
+<section id="references" class="level1 unnumbered" data-number="1">
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">6 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">1 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-COMPL_DB" class="csl-entry" role="doc-biblioentry">
 <em>Consumer Complaints Database</em>. 2022. Consumer Financial Protection Bureau. <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data">https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data</a>.
+</div>
+<div id="ref-pandas" class="csl-entry" role="doc-biblioentry">
+McKinney, Wes. 2010. <span>“<span>D</span>ata <span>S</span>tructures for <span>S</span>tatistical <span>C</span>omputing in <span>P</span>ython.”</span> In <em><span>P</span>roceedings of the 9th <span>P</span>ython in <span>S</span>cience <span>C</span>onference</em>, edited by Stéfan van der Walt and Jarrod Millman, 56–61. <a href="https://doi.org/ 10.25080/Majora-92bf1922-00a ">https://doi.org/ 10.25080/Majora-92bf1922-00a </a>.
+</div>
+<div id="ref-scikit-learn" class="csl-entry" role="doc-biblioentry">
+Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. <span>“Scikit-Learn: Machine Learning in <span>P</span>ython.”</span> <em>Journal of Machine Learning Research</em> 12: 2825–30.
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

@@ -104,4 +104,4 @@ The results above motivates us to choose `LogisticRegression` as the final estim
 
 The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company's response. We processed the features such as the product, consumer's complaints, and company's responses. We trained five different models that optimized the f1 score and chose `LogisticRegression` as a suitable estimator for analysis of this problem.
 
-# References
+## References

@@ -16,6 +16,8 @@ format:
     toc: true
     number-sections: true
     colorlinks: true
+params: 
+  output_dir: "reports"
 ---
 
 ```{r, include=FALSE}

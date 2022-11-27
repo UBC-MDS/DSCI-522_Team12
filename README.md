@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 To update the `environment.yml` file you can run the following command if using a Conda environment:
 ```
-conda env export > environment.yml
+conda env export --no-builds > environment.yml
 ```
 
 To output a pip formatted `requirements.txt` use the following command to generate one from a Conda environment:
@@ -68,16 +68,16 @@ python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/comp
 python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
 
 # Generating the EDA results 
-python src/generate_eda.py --train="data/processed/preprocessed-complaints.csv" --out_dir="reports"
+python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
 
 # Running the analysis
 python src/analysis/ly_analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
 # Genrating the final report
 # ON windows where quarto.exe is not found in path from git bash
-quarto.cmd render reports/milestone-2-report.qmd --to html
+quarto.cmd render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 # Or on Mac/Linux with Quarto in path
-quarto render reports/milestone-2-report.qmd --to html
+quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 ```
 
 ## Contributing

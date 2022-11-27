@@ -37,17 +37,23 @@ As of 2022, the CFPB receives over 60,000 consumer complaints a month related to
 
 Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike.
 
-![plot](assets/plot-placeholder-image.png)\
+![Figure 1. Monthly complaints since 2012.](assets/complaints_over_time_line.png)
 
 The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the \~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.
 
-![Figure 2. Class Imbalance in the Target Column](assets/class_imbalance.png)\
+![Figure 2. Class Imbalance in the Target Column](assets/disputed_bar.png)
 
 Each field has varying amounts of missing values as can be seen in Table 1 below. Fields such as tag where there are numerous entries missing values were removed from the analysis. Individual complaints with missing information were removed from the data-set for analysis since the data set is large enough to still have a significant number of training examples for the analysis (\~20,000).
 
 ```{r, message=FALSE}
-table_data <- read_csv("./assets/unique_counts.csv")|>subset( select = -c(1) )
-kable(table_data, caption = "Table 1. Unique and missing value counts by data feature.")
+table_data <- read_csv("./assets/unique_counts.csv") |>
+  subset( select = -c(1) ) |>
+  tail(-1)
+kable(table_data, 
+      caption = "Table 1. Unique and missing value counts by data feature.",
+      col.names = c("Fields", "Valid Count", "Unique Count"),
+      align = "lcc"
+      )
 
 ```
 
@@ -57,50 +63,57 @@ A predictive approach using multiple classification models was used to attempt t
 
 Feature pre-processing approach and rationale is as follows:
 
-+------------------------------+------------------------+------------------------------------+
-| Features                     | Preprocessing Step     | Rationale                          |
-+==============================+========================+====================================+
-| consumer_complaint_narrative | CountVectorizer        | High Amount of Unique Textual Data |
-|                              |                        |                                    |
-|                              | max_features = 1000    |                                    |
-+------------------------------+------------------------+------------------------------------+
-| product                      | OneHotEncoder (Binary) | Two Products Included              |
-|                              |                        |                                    |
-| sub_product                  | OneHotEncoder          | Categorical Values                 |
-|                              |                        |                                    |
-| issue                        | OneHotEncoder          | Categorical Values                 |
-|                              |                        |                                    |
-| company_public_response      | OneHotEncoder          | Categorical Values                 |
-|                              |                        |                                    |
-| company                      | OneHotEncoder          | Categorical Values                 |
-|                              |                        |                                    |
-| company_response_to_consumer | OneHotEncoder          | Categorical Values                 |
-+------------------------------+------------------------+------------------------------------+
-| consumer_consent_provided    | dropped                | Single Category                    |
-+------------------------------+------------------------+------------------------------------+
+Table 2: Feature selection and encodings.
+
++------------------------------+---------------------+--------------------------------------------+
+| Features                     | Preprocessing Step  | Rationale                                  |
++==============================+=====================+============================================+
+| consumer_complaint_narrative | CountVectorizer     | High Amount of Unique Textual Data         |
+|                              |                     |                                            |
+|                              | max_features = 1000 |                                            |
++------------------------------+---------------------+--------------------------------------------+
+| product                      | OneHotEncoder       | Each field is categorical                  |
+|                              |                     |                                            |
+| sub_product                  | drop = "if_binary"  |                                            |
+|                              |                     |                                            |
+| issue                        |                     |                                            |
+|                              |                     |                                            |
+| company_public_response      |                     |                                            |
+|                              |                     |                                            |
+| company                      |                     |                                            |
+|                              |                     |                                            |
+| company_response_to_consumer |                     |                                            |
++------------------------------+---------------------+--------------------------------------------+
+| consumer_consent_provided    | dropped             | Only one value in this column              |
++------------------------------+---------------------+--------------------------------------------+
 
 : These features were passed into a column transformer, which was then integrated with five different estimator for prediction.
 
 ## Results & Discussion
 
-We applied the `DummyClassifier`, `LogisticRegression`, `Naive Bayes`, `SVC`, and `RandomForestClassifier` to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation is presented below:
+We applied the `DummyClassifier`, `LogisticRegression`, `Naive Bayes`, `SVC`, and `RandomForestClassifier` to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation were as follows:
 
 ```{r, message=FALSE}
 table_data <- read.csv("./assets/results.csv") 
 names(table_data)[1] <- ''
   
-  
-kable(table_data, caption = "Table 2. Model Performance and Score.")
+kable(table_data, 
+      caption = "Table 3. Model Performance and Score.",
+      col.names = c("Metric", "Dummy", "Logistic Regression", "Naive Bayes", "SVC", " Random Forest"),
+      align = "cccccc"
+)
 ```
 
 Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the `DummyClassifier`. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company's perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.
 
 ![Figure 3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}
 
-The results above motivates us to choose `LogisticRegression` as the final estimator. It has overall a great f1 score and among the recall is among highest scores. Though we sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
+The results above motivates us to choose `LogisticRegression` as the final estimator. It has one of the overall highest f1 scores at 0.368 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
+
+Unfortunately, an f1 score of 0.368 for `LogisticRegression` is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.
 
 ## Conclusion
 
-The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company's response. We processed the features such as the product, consumer's complaints, and company's responses. We trained five different models that optimized the f1 score and chose `LogisticRegression` as a suitable estimator for analysis of this problem.
+The analysis in this reports focuses on using a machine learning approach to predict whether the consumer is going to dispute after the company's response. We processed the features such as the product, consumer's complaints, and company's responses. We trained five different models that optimized the f1 score and chose `LogisticRegression` as a suitable estimator for the first pass at attempting to predict whether consumers dispute their complaints. Next steps would be evaluating the impact of the chosen models performance and then deciding whether to try and refine further to improve the model.
 
 ## References

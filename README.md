@@ -10,9 +10,8 @@ course in the Masters of Data Science program at the University of
 British Columbia.
 ## Report
 
-A final report can be found here[## Exploratory Data Analysis (EDA)
 
-The initial EDA is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/milestone-2-report.html)
+The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/milestone-2-report.html)
 
 ## Project proposal
 

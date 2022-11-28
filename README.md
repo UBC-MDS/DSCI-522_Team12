@@ -8,6 +8,10 @@ Authors:
 A data science project for DSCI 522 (Data Science workflows); a
 course in the Masters of Data Science program at the University of
 British Columbia.
+## Report
+
+
+The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/milestone-2-report.html)
 
 ## Project proposal
 
@@ -71,7 +75,7 @@ python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --o
 python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
 
 # Running the analysis
-python src/analysis/ly_analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
+python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
 # Genrating the final report
 # ON windows where quarto.exe is not found in path from git bash

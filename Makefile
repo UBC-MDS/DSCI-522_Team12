@@ -2,7 +2,7 @@
 # author: Ty Andrews, Dhruvi Nishar, Luke Yang
 # date: 2022-11-30
 
-all: reports/final_report.qmd reports/final_report.pdf reports/final_report.html 
+all: reports/final_report.html 
 
 # download data
 data/raw/complaints.csv: src/data/get_dataset.py
@@ -27,12 +27,13 @@ reports/final_report.html: reports/final_report.qmd eports/assets/results.csv ep
 clean: 
 	rm -f data/raw/complaints.csv
 	rm -f data/processed/preprocessed-complaints.csv
-	rm -f reports/*.aux
-	rm -f reports/*.html
-	rm -f reports/*.pdf
-	rm -f reports/*.tex
-	rm -f reports/*.toc
-	rm -f reports/*_files
+	rm -f reports/assets/*.aux
+	rm -f reports/assets/*.html
+	rm -f reports/assets/*.pdf
+	rm -f reports/assets/*.tex
+	rm -f reports/assets/*.toc
+	rm -f reports/assets/*_files
 	rm -f reports/assets/*.png
 	rm -f reports/assets/*.csv
-	rm -rf reports/assets/tables
+	rm -r reports/assets/tables
+	rm -r reports/*_files

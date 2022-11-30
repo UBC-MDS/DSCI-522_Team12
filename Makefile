@@ -17,11 +17,11 @@ reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.
 	python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
 
 # perform analysis 
-eports/assets/results.csv eports/assets/model_performance.png: src/analysis/analysis.py data/processed/preprocessed-complaints.csv
+reports/assets/results.csv reports/assets/model_performance.png: src/analysis/analysis.py data/processed/preprocessed-complaints.csv
 	python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
 # render report
-reports/final_report.html: reports/final_report.qmd eports/assets/results.csv eports/assets/model_performance.png reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png
+reports/final_report.html: reports/final_report.qmd reports/assets/results.csv reports/assets/model_performance.png reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png
 	quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 
 clean: 
@@ -35,5 +35,5 @@ clean:
 	rm -f reports/assets/*_files
 	rm -f reports/assets/*.png
 	rm -f reports/assets/*.csv
-	rm -r reports/assets/tables
+	rm -f reports/assets/tables/*.csv
 	rm -r reports/*_files

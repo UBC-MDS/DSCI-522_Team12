@@ -11,7 +11,7 @@ British Columbia.
 ## Report
 
 
-The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/milestone-2-report.html)
+The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
 
 ## Project proposal
 

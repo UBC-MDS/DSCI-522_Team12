@@ -25,6 +25,8 @@ reports/final_report.html: reports/final_report.qmd eports/assets/results.csv ep
 	quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 
 clean: 
+	rm -f data/raw/complaints.csv
+	rm -f data/processed/preprocessed-complaints.csv
 	rm -f reports/*.aux
 	rm -f reports/*.html
 	rm -f reports/*.pdf
@@ -33,5 +35,4 @@ clean:
 	rm -f reports/*_files
 	rm -f reports/assets/*.png
 	rm -f reports/assets/*.csv
-	rm -rf results
-	rm -rf doc/breast_cancer_predict_report.md doc/breast_cancer_predict_report.html
+	rm -rf reports/assets/tables

@@ -1,31 +1,27 @@
-# breast cancer data pipe
-# author: Tiffany Timbers
-# date: 2020-01-17
+# customer complaint analysis
+# author: Ty Andrews, Dhruvi Nishar, Luke Yang
+# date: 2022-11-30
 
-all: results/final_model.rds results/accuracy_vs_k.png results/predictor_distributions_across_class.png results/final_model_quality.rds doc/breast_cancer_predict_report.md
+all: reports/final_report.qmd reports/final_report.pdf reports/final_report.html 
 
 # download data
-data/raw/wdbc.feather: src/download_data.py
-	python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
+data/raw/complaints.csv: src/data/get_dataset.py
+	python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
 
 # pre-process data (e.g., scale and split into train & test)
-data/processed/training.feather data/processed/test.feather scale_factor.rds: src/pre_process_wisc.r data/raw/wdbc.feather
-	Rscript src/pre_process_wisc.r --input=data/raw/wdbc.feather --out_dir=data/processed 
+data/processed/preprocessed-complaints.csv : src/data/load_preprocess_data.py data/raw/complaints.csv
+	python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv" 
 
 # exploratory data analysis - visualize predictor distributions across classes
-results/predictor_distributions_across_class.png: src/eda_wisc.r data/processed/training.feather
-	Rscript src/eda_wisc.r --train=data/processed/training.feather --out_dir=results
+reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png: src/data/generate_eda.py data/processed/preprocessed-complaints.csv
+	python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
 
-# tune model (here, find K for k-nn using 30 fold cv with Cohen's Kappa)
-results/final_model.rds results/accuracy_vs_k.png: src/fit_breast_cancer_predict_model.r data/processed/training.feather
-	Rscript src/fit_breast_cancer_predict_model.r --train=data/processed/training.feather --out_dir=results
-
-# test model on unseen data
-results/final_model_quality.rds: src/breast_cancer_test_results.r data/processed/test.feather
-	Rscript src/breast_cancer_test_results.r --test=data/processed/test.feather --out_dir=results
+# perform analysis 
+eports/assets/results.csv eports/assets/model_performance.png: src/analysis/analysis.py data/processed/preprocessed-complaints.csv
+	python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
 # render report
-doc/breast_cancer_predict_report.md: doc/breast_cancer_predict_report.Rmd doc/breast_cancer_refs.bib
+reports/final_report.html: reports/final_report.qmd eports/assets/results.csv eports/assets/model_performance.png reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png
 	Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'github_document')"
 
 clean: 

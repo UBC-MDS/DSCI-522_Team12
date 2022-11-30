@@ -20,9 +20,9 @@ reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png: sr
 reports/assets/results.csv reports/assets/model_performance.png: src/analysis/analysis.py data/processed/preprocessed-complaints.csv
 	python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
-# render report
+# render report 
 reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
-	quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
+	quarto render reports/final_report.qmd --to html -P output_dir="reports"
 
 clean: 
 	rm -f data/raw/complaints.csv

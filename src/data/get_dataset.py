@@ -37,7 +37,7 @@ def main(url, out_filepath):
         print("Writing the content.")
         open(zip_path, 'wb').write(r.content)
         write_content_time = time.time()
-        print("Downloading completed using",write_content_time - mid,'seconds.')
+        print("Writing completed using",write_content_time - mid,'seconds.')
         print("Unzipping the file")
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(csv_save_path)

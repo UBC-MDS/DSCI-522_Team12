@@ -26,6 +26,9 @@ def main(url, out_filepath):
     if out_filepath is None:
         out_filepath = os.path.join('data', 'raw', filename)
     try:
+        if os.path.exists(out_filepath+'.csv'):
+            print("Data already exist")
+            return 0
         zip_path = out_filepath+'.zip'
         csv_save_path = os.path.join('data', 'raw')
         print("Pulling the data from the web...")

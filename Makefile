@@ -13,7 +13,7 @@ data/processed/preprocessed-complaints.csv : src/data/load_preprocess_data.py da
 	python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv" 
 
 # exploratory data analysis - visualize predictor distributions across classes
-reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png: src/data/generate_eda.py data/processed/preprocessed-complaints.csv
+reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png: src/data/generate_eda.py data/processed/preprocessed-complaints.csv
 	python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
 
 # perform analysis 
@@ -21,7 +21,7 @@ reports/assets/results.csv reports/assets/model_performance.png: src/analysis/an
 	python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
 
 # render report
-reports/final_report.html: reports/final_report.qmd reports/assets/results.csv reports/assets/model_performance.png reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png
+reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
 	quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 
 clean: 

@@ -61,7 +61,7 @@ The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb
 To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
 
 Here is how the process works:
-![](reports/assets/analysis-pipeline-overview.png)
+![](reports/assets/analysis-pipeline-overview.jpg)
 
 Below are all the commands/options you can copy/paste from:
 ```bash

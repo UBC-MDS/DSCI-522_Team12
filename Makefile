@@ -22,9 +22,16 @@ eports/assets/results.csv eports/assets/model_performance.png: src/analysis/anal
 
 # render report
 reports/final_report.html: reports/final_report.qmd eports/assets/results.csv eports/assets/model_performance.png reports/assets/disputed_bar.png reports/assets/assets/complaints_over_time_line.png
-	Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'github_document')"
+	quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 
 clean: 
-	rm -rf data
+	rm -f reports/*.aux
+	rm -f reports/*.html
+	rm -f reports/*.pdf
+	rm -f reports/*.tex
+	rm -f reports/*.toc
+	rm -f reports/*_files
+	rm -f reports/assets/*.png
+	rm -f reports/assets/*.csv
 	rm -rf results
 	rm -rf doc/breast_cancer_predict_report.md doc/breast_cancer_predict_report.html

@@ -28,7 +28,8 @@ def main(url, out_filepath):
     try:
         zip_path = out_filepath+'.zip'
         csv_save_path = os.path.join('data', 'raw')
-        print("Pulling from the web")
+        print("Pulling the data from the web...")
+        print("This may take up to 2 minutes...")
         start = time.time()
         r = requests.get(url, allow_redirects=True)
         mid = time.time()

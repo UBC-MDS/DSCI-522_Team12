@@ -5,7 +5,7 @@
 all: reports/final_report.html 
 
 all_windows: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
-	quarto.cmd render reports/final_report.qmd --to html -P output_dir="reports"
+	quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
 	
 # download data
 data/raw/complaints.csv: src/data/get_dataset.py

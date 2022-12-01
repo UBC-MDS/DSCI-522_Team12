@@ -15,8 +15,6 @@ import os
 import time
 import zipfile
 
-opt = docopt(__doc__)
-
 
 def main(url, out_filepath):
     """
@@ -54,4 +52,5 @@ def main(url, out_filepath):
     
 
 if __name__ == "__main__":
+    opt = docopt(__doc__)
     main(opt["--url"], opt["--out_filepath"])

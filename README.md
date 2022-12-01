@@ -56,6 +56,20 @@ pip list --format=freeze > requirements.txt
 
 The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
 
+## Dependencies
+
+- Python 3.7.3 and Python packages:
+      - altair==4.2.0
+      - numpy==1.23.5
+      - pandas==1.4.4
+      - pytest==7.2.0
+      - requests==2.28.1
+      - scikit_learn==1.1.3
+      - docopt-ng==0.8.1
+  - R version 4.2.1 and R packages:
+      - tidyverse==1.3.2
+  - GNU make 3.81
+
 ## Running Full Analysis Pipeline
 
 To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.

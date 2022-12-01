@@ -69,7 +69,11 @@ For the project to be correctly run, the following packages need to be installed
 
 ## Usage
 
-You can replicate the analysis by the following command from the
+
+Here is how the analysis process works:
+![](reports/assets/analysis-pipeline-overview.jpg)
+
+To start from the base repo and access, clean, analyze and generate the final reports you can run the following command from the
 root directory of this project. Note that it is OK to observe `UserWarning` during the model training:
 ```
 make
@@ -78,34 +82,6 @@ Running the following command from the
 root directory of this project could clean up the analysis to its initial state:
 ```
 make clean
-```
-
-## Running Full Analysis Pipeline
-
-To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
-
-Here is how the process works:
-![](reports/assets/analysis-pipeline-overview.jpg)
-
-Below are all the commands/options you can copy/paste from:
-```bash
-# Accessing and downloading the raw data
-python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
-
-# Cleaning & preprocessing the raw data
-python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
-
-# Generating the EDA results 
-python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
-
-# Running the analysis
-python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
-
-# Genrating the final report
-# ON windows where quarto.exe is not found in path from git bash
-quarto.cmd render reports/milestone-2-report.qmd --to html -P output_dir="reports"
-# Or on Mac/Linux with Quarto in path
-quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
 ```
 
 ## Contributing

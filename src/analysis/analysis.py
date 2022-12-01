@@ -92,33 +92,19 @@ def main(data_filepath, out_filepath):
     cross_val_results = {}
     
     print('Analyzing baseline model...')
-    pipe_dc = make_pipeline(preprocessor, DummyClassifier())
-    pipe_dc.fit(X_train, y_train)
-    cross_val_results['dummy'] = pd.DataFrame(cross_validate(
-        pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
+    train_dummy(X_train, y_train, preprocessor, scoring_metrics, cross_val_results)
     
     print('Analyzing logistic regression model...')
-    pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=10000, class_weight='balanced'))
-    cross_val_results['logreg'] = pd.DataFrame(cross_validate(
-        pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
-    cross_val_results['logreg']
+    train_logreg(X_train, y_train, preprocessor, scoring_metrics, cross_val_results)
     
     print('Analyzing naive bayes model...')
-    pipe_nb = make_pipeline(preprocessor, BernoulliNB(alpha = 0.1))
-    cross_val_results['bayes'] = pd.DataFrame(cross_validate(
-        pipe_nb, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
-    cross_val_results['bayes']
+    train_nb(X_train, y_train, preprocessor, scoring_metrics, cross_val_results)
     
     print('Analyzing svc model...')
-    pipe_svc = make_pipeline(preprocessor, SVC(class_weight='balanced'))
-    cross_val_results['svc'] = pd.DataFrame(cross_validate(
-        pipe_svc, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
-    cross_val_results['svc']
+    train_svc(X_train, y_train, preprocessor, scoring_metrics, cross_val_results)
     
     print('Analyzing random forest model...')
-    pipe_rf = make_pipeline(preprocessor, RandomForestClassifier(class_weight='balanced'))
-    cross_val_results['random forest'] = pd.DataFrame(cross_validate(
-        pipe_rf, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+    train_random_forest(X_train, y_train, preprocessor, scoring_metrics, cross_val_results)
             
     res = pd.concat(cross_val_results, axis=1)
     res.columns = res.columns.droplevel(1)
@@ -137,6 +123,35 @@ def main(data_filepath, out_filepath):
         color='Metric:N',
         column='Model:N'
     ).save(os.path.join(out_filepath,'model_performance.png'))
+
+def train_random_forest(X_train, y_train, preprocessor, scoring_metrics, cross_val_results):
+    pipe_rf = make_pipeline(preprocessor, RandomForestClassifier(class_weight='balanced', random_state=123))
+    cross_val_results['random forest'] = pd.DataFrame(cross_validate(
+        pipe_rf, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+
+def train_svc(X_train, y_train, preprocessor, scoring_metrics, cross_val_results):
+    pipe_svc = make_pipeline(preprocessor, SVC(class_weight='balanced', random_state=123))
+    cross_val_results['svc'] = pd.DataFrame(cross_validate(
+        pipe_svc, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+    cross_val_results['svc']
+
+def train_nb(X_train, y_train, preprocessor, scoring_metrics, cross_val_results):
+    pipe_nb = make_pipeline(preprocessor, BernoulliNB(alpha = 0.1))
+    cross_val_results['bayes'] = pd.DataFrame(cross_validate(
+        pipe_nb, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+    cross_val_results['bayes']
+
+def train_logreg(X_train, y_train, preprocessor, scoring_metrics, cross_val_results):
+    pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=10000,random_state=123, class_weight='balanced'))
+    cross_val_results['logreg'] = pd.DataFrame(cross_validate(
+        pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+    cross_val_results['logreg']
+
+def train_dummy(X_train, y_train, preprocessor, scoring_metrics, cross_val_results):
+    pipe_dc = make_pipeline(preprocessor, DummyClassifier())
+    pipe_dc.fit(X_train, y_train)
+    cross_val_results['dummy'] = pd.DataFrame(cross_validate(
+        pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
 
 
 

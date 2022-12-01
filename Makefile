@@ -4,6 +4,9 @@
 
 all: reports/final_report.html 
 
+all_windows: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
+	quarto.cmd render reports/final_report.qmd --to html -P output_dir="reports"
+	
 # download data
 data/raw/complaints.csv: src/data/get_dataset.py
 	python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
@@ -25,15 +28,17 @@ reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.
 	quarto render reports/final_report.qmd --to html -P output_dir="reports"
 
 clean: 
-	rm -f data/raw/complaints.csv
-	rm -f data/processed/preprocessed-complaints.csv
-	rm -f reports/assets/*.aux
-	rm -f reports/assets/*.html
-	rm -f reports/assets/*.pdf
-	rm -f reports/assets/*.tex
-	rm -f reports/assets/*.toc
-	rm -f reports/assets/*_files
-	rm -f reports/assets/*.png
-	rm -f reports/assets/*.csv
-	rm -f reports/assets/tables/*.csv
-	rm -r reports/*_files
+	rm -f data/**/*.csv
+	rm -f data/**/*.zip
+	rm -f reports/**/*.aux
+	rm -f reports/**/*.html
+	rm -f reports/*.html
+	rm -f reports/**/*.md
+	rm -f reports/*.md
+	rm -f reports/**/*.pdf
+	rm -f reports/*.pdf
+	rm -f reports/**/*.tex
+	rm -f reports/**/*.toc
+	rm -f reports/**/*_files
+	rm -f reports/**/*.png
+	rm -f reports/**/*.csv

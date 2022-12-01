@@ -25,8 +25,8 @@ reports/assets/results.csv reports/assets/model_performance.png: src/analysis/an
 
 # render report 
 reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
-	-quarto render reports/final_report.qmd --to html -P output_dir="reports/assets"
-	-quarto.cmd render reports/final_report.qmd --to html -P output_dir="reports/assets"
+	-quarto render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
+	-quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
 
 clean: 
 	rm -f data/**/*.csv
@@ -40,6 +40,8 @@ clean:
 	rm -f reports/*.pdf
 	rm -f reports/**/*.tex
 	rm -f reports/**/*.toc
-	rm -f reports/**/*_files
+	-rm -r reports/**/*_files
+	-rm -r reports/*_files
 	rm -f reports/**/*.png
+	rm -f reports/**/**/*.csv
 	rm -f reports/**/*.csv

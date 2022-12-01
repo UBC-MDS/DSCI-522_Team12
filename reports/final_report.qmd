@@ -17,7 +17,7 @@ format:
     number-sections: true
     colorlinks: true
 params: 
-  output_dir: "reports"
+  output_file: "reports"
 fig-cap-location: top
 ---
 

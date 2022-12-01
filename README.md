@@ -10,8 +10,7 @@ course in the Masters of Data Science program at the University of
 British Columbia.
 ## Report
 
-
-The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
+The final report is located [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
 
 ## Project proposal
 
@@ -52,13 +51,10 @@ To output a pip formatted `requirements.txt` use the following command to genera
 pip list --format=freeze > requirements.txt
 ```
 
-## Exploratory Data Analysis (EDA)
-
-The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
-
 ## Dependencies
+For the project to be correctly run, the following packages need to be installed. If the steps from the above could not be executed corrected, please make sure you have the following packages available in your environment by manual installation:
 
-- Python 3.7.3 and Python packages:
+  - Python 3.7.3 and Python packages:
       - altair==4.2.0
       - numpy==1.23.5
       - pandas==1.4.4
@@ -69,6 +65,20 @@ The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb
   - R version 4.2.1 and R packages:
       - tidyverse==1.3.2
   - GNU make 3.81
+
+
+## Usage
+
+You can replicate the analysis by the following command from the
+root directory of this project. Note that it is OK to observe `UserWarning` during the model training:
+```
+make
+```
+Running the following command from the
+root directory of this project could clean up the analysis to its initial state:
+```
+make clean
+```
 
 ## Running Full Analysis Pipeline
 

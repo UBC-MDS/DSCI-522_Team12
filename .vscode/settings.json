@@ -3,5 +3,8 @@
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestPath": "C:\\Users\\tyand\\miniconda3\\envs\\complaints\\Scripts\\pytest.exe",
+    "pythonTestExplorer.testFramework": "pytest",
+    "python.defaultInterpreterPath": "C:\\Users\\tyand\\miniconda3\\envs\\complaints\\python.exe"
 }

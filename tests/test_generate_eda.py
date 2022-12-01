@@ -13,8 +13,9 @@ if src_path not in sys.path:
 
 raw_data_path = os.path.join("data", "raw", "complaints.csv")
 
-from data.generate_eda import save_table
+from src.data.generate_eda import save_table
+
 
 def test_input_type():
 
-    assert 'a' == 'a'
+    assert "a" == "a"

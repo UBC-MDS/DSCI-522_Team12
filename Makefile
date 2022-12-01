@@ -25,7 +25,8 @@ reports/assets/results.csv reports/assets/model_performance.png: src/analysis/an
 
 # render report 
 reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
-	quarto render reports/final_report.qmd --to html -P output_dir="reports"
+	-quarto render reports/final_report.qmd --to html -P output_dir="reports"
+	-quarto.cmd render reports/final_report.qmd --to html -P output_dir="reports"
 
 clean: 
 	rm -f data/**/*.csv

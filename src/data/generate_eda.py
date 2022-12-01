@@ -24,8 +24,8 @@ if SRC_PATH not in sys.path:
 
 from src.data.load_preprocess_data import load_and_preprocess_raw_complaints_data
 
-# reading the docscript for the arguments
-opt = docopt(__doc__)
+# # reading the docscript for the arguments
+# opt = docopt(__doc__)
 
 # function that saves the table as a csv file
 def save_table(table, table_name):
@@ -143,4 +143,6 @@ def main(train, out_dir):
 
 
 if __name__ == "__main__":
+    # reading the docscript for the arguments
+    opt = docopt(__doc__)
     main(opt["--train"], opt["--out_dir"])

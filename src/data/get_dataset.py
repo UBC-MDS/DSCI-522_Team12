@@ -15,8 +15,6 @@ import os
 import time
 import zipfile
 
-opt = docopt(__doc__)
-
 
 def main(url, out_filepath):
     """
@@ -26,9 +24,13 @@ def main(url, out_filepath):
     if out_filepath is None:
         out_filepath = os.path.join('data', 'raw', filename)
     try:
+        if os.path.exists(out_filepath+'.csv'):
+            print("Data already exist")
+            return 0
         zip_path = out_filepath+'.zip'
         csv_save_path = os.path.join('data', 'raw')
-        print("Pulling from the web")
+        print("Pulling the data from the web...")
+        print("This may take up to 2 minutes...")
         start = time.time()
         r = requests.get(url, allow_redirects=True)
         mid = time.time()
@@ -36,7 +38,7 @@ def main(url, out_filepath):
         print("Writing the content.")
         open(zip_path, 'wb').write(r.content)
         write_content_time = time.time()
-        print("Downloading completed using",write_content_time - mid,'seconds.')
+        print("Writing completed using",write_content_time - mid,'seconds.')
         print("Unzipping the file")
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(csv_save_path)
@@ -50,4 +52,5 @@ def main(url, out_filepath):
     
 
 if __name__ == "__main__":
+    opt = docopt(__doc__)
     main(opt["--url"], opt["--out_filepath"])

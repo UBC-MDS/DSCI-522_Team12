@@ -11,7 +11,7 @@ British Columbia.
 ## Report
 
 
-The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/milestone-2-report.html)
+The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
 
 ## Project proposal
 
@@ -61,7 +61,7 @@ The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb
 To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
 
 Here is how the process works:
-![](reports/assets/analysis-pipeline-overview.png)
+![](reports/assets/analysis-pipeline-overview.jpg)
 
 Below are all the commands/options you can copy/paste from:
 ```bash

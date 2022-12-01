@@ -98,7 +98,7 @@ def main(data_filepath, out_filepath):
         pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
     
     print('Analyzing logistic regression model...')
-    pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=1000, class_weight='balanced'))
+    pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=10000, class_weight='balanced'))
     cross_val_results['logreg'] = pd.DataFrame(cross_validate(
         pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
     cross_val_results['logreg']

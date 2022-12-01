@@ -40,16 +40,16 @@ div.csl-indent {
 </style>
 
 
-<script src="milestone-2-report_files/libs/clipboard/clipboard.min.js"></script>
-<script src="milestone-2-report_files/libs/quarto-html/quarto.js"></script>
-<script src="milestone-2-report_files/libs/quarto-html/popper.min.js"></script>
-<script src="milestone-2-report_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="milestone-2-report_files/libs/quarto-html/anchor.min.js"></script>
-<link href="milestone-2-report_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="milestone-2-report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="milestone-2-report_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="milestone-2-report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="milestone-2-report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="final_report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="final_report_files/libs/quarto-html/quarto.js"></script>
+<script src="final_report_files/libs/quarto-html/popper.min.js"></script>
+<script src="final_report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="final_report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="final_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="final_report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="final_report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="final_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="final_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 
 </head>
@@ -111,7 +111,7 @@ div.csl-indent {
 <p>Complaints can be responded to by the company in multiple ways but each consumer has the opportunity to dispute the provided response. These disputes are likely costly to both the CFPB and the companies for which they are raised so being able to anticipate whether a complaint will be disputed has the potential to save both time and money for companies and the CFPB alike. Especially, as we observed that the number of complaints spikes near 2022 (Figure 1), it is essential to understand the tactics of handling these complaints.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure 1. Complaints Over Timeline</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1. Complaints Over Timeline</figcaption><p></p>
 <p><img src="assets/complaints_over_time_line.png" class="img-fluid figure-img" alt="Figure 1. Complaints Over Timeline"></p>
 </figure>
 </div>
@@ -123,7 +123,7 @@ div.csl-indent {
 <p>We used pandas<span class="citation" data-cites="pandas">(<a href="#ref-pandas" role="doc-biblioref">McKinney 2010</a>)</span>, scikit-learn<span class="citation" data-cites="scikit-learn">(<a href="#ref-scikit-learn" role="doc-biblioref">Pedregosa et al. 2011</a>)</span>, and TidyVerse <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> to collect, analyze, and summarize our data. The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure 2. Class Imbalance in the Target Column</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 2. Class Imbalance in the Target Column</figcaption><p></p>
 <p><img src="assets/disputed_bar.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
@@ -142,82 +142,82 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">date_received</td>
-<td style="text-align: center;">3084450</td>
-<td style="text-align: center;">4003</td>
+<td style="text-align: center;">3112427</td>
+<td style="text-align: center;">4015</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">product</td>
-<td style="text-align: center;">3084450</td>
+<td style="text-align: center;">3112427</td>
 <td style="text-align: center;">18</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sub_product</td>
-<td style="text-align: center;">2849156</td>
+<td style="text-align: center;">2877133</td>
 <td style="text-align: center;">76</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">issue</td>
-<td style="text-align: center;">3084450</td>
+<td style="text-align: center;">3112427</td>
 <td style="text-align: center;">165</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sub_issue</td>
-<td style="text-align: center;">2401899</td>
+<td style="text-align: center;">2428623</td>
 <td style="text-align: center;">221</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">consumer_complaint_narrative</td>
-<td style="text-align: center;">1107253</td>
-<td style="text-align: center;">967541</td>
+<td style="text-align: center;">1118789</td>
+<td style="text-align: center;">976846</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">company_public_response</td>
-<td style="text-align: center;">1339720</td>
+<td style="text-align: center;">1354131</td>
 <td style="text-align: center;">11</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">company</td>
-<td style="text-align: center;">3084450</td>
-<td style="text-align: center;">6565</td>
+<td style="text-align: center;">3112427</td>
+<td style="text-align: center;">6577</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">state</td>
-<td style="text-align: center;">3044459</td>
+<td style="text-align: center;">3072377</td>
 <td style="text-align: center;">63</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">zip_code</td>
-<td style="text-align: center;">3043948</td>
-<td style="text-align: center;">34429</td>
+<td style="text-align: center;">3071856</td>
+<td style="text-align: center;">34456</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">tags</td>
-<td style="text-align: center;">350065</td>
+<td style="text-align: center;">352257</td>
 <td style="text-align: center;">3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">consumer_consent_provided</td>
-<td style="text-align: center;">2264772</td>
+<td style="text-align: center;">2290116</td>
 <td style="text-align: center;">4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">submitted_via</td>
-<td style="text-align: center;">3084450</td>
+<td style="text-align: center;">3112427</td>
 <td style="text-align: center;">7</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">date_sent_to_company</td>
-<td style="text-align: center;">3084450</td>
-<td style="text-align: center;">3952</td>
+<td style="text-align: center;">3112427</td>
+<td style="text-align: center;">3964</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">company_response_to_consumer</td>
-<td style="text-align: center;">3084446</td>
+<td style="text-align: center;">3112423</td>
 <td style="text-align: center;">8</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">timely_response</td>
-<td style="text-align: center;">3084450</td>
+<td style="text-align: center;">3112427</td>
 <td style="text-align: center;">2</td>
 </tr>
 <tr class="odd">
@@ -227,8 +227,8 @@ div.csl-indent {
 </tr>
 <tr class="even">
 <td style="text-align: left;">complaint_id</td>
-<td style="text-align: center;">3084450</td>
-<td style="text-align: center;">3084450</td>
+<td style="text-align: center;">3112427</td>
+<td style="text-align: center;">3112427</td>
 </tr>
 </tbody>
 </table>
@@ -308,52 +308,52 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">fit_time</td>
-<td style="text-align: right;">0.978</td>
-<td style="text-align: right;">5.475</td>
-<td style="text-align: right;">1.674</td>
-<td style="text-align: right;">123.556</td>
-<td style="text-align: right;">22.726</td>
+<td style="text-align: center;">fit_time</td>
+<td style="text-align: center;">4.980</td>
+<td style="text-align: center;">33.942</td>
+<td style="text-align: center;">7.986</td>
+<td style="text-align: center;">461.778</td>
+<td style="text-align: center;">255.859</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">score_time</td>
-<td style="text-align: right;">0.257</td>
-<td style="text-align: right;">0.431</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">24.588</td>
-<td style="text-align: right;">0.592</td>
+<td style="text-align: center;">score_time</td>
+<td style="text-align: center;">1.134</td>
+<td style="text-align: center;">2.285</td>
+<td style="text-align: center;">1.803</td>
+<td style="text-align: center;">114.819</td>
+<td style="text-align: center;">4.980</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">test_accuracy</td>
-<td style="text-align: center;">0.779</td>
-<td style="text-align: center;">0.655</td>
+<td style="text-align: center;">0.777</td>
+<td style="text-align: center;">0.645</td>
 <td style="text-align: center;">0.702</td>
-<td style="text-align: center;">0.679</td>
-<td style="text-align: center;">0.784</td>
+<td style="text-align: center;">0.681</td>
+<td style="text-align: center;">0.782</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">test_recall</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.455</td>
-<td style="text-align: right;">0.342</td>
-<td style="text-align: right;">0.445</td>
-<td style="text-align: right;">0.056</td>
+<td style="text-align: center;">test_recall</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.444</td>
+<td style="text-align: center;">0.357</td>
+<td style="text-align: center;">0.455</td>
+<td style="text-align: center;">0.055</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">test_precision</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.309</td>
-<td style="text-align: right;">0.332</td>
-<td style="text-align: right;">0.331</td>
-<td style="text-align: right;">0.631</td>
+<td style="text-align: center;">test_precision</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.300</td>
+<td style="text-align: center;">0.340</td>
+<td style="text-align: center;">0.340</td>
+<td style="text-align: center;">0.646</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">test_f1</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.368</td>
-<td style="text-align: right;">0.337</td>
-<td style="text-align: right;">0.380</td>
-<td style="text-align: right;">0.102</td>
+<td style="text-align: center;">test_f1</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.358</td>
+<td style="text-align: center;">0.348</td>
+<td style="text-align: center;">0.389</td>
+<td style="text-align: center;">0.101</td>
 </tr>
 </tbody>
 </table>
@@ -362,7 +362,7 @@ div.csl-indent {
 <p>Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the <code>DummyClassifier</code>. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company’s perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure 3: Performance of Different Models on Different Metrics</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 3: Performance of Different Models on Different Metrics</figcaption><p></p>
 <p><img src="assets/model_performance.png" class="img-fluid figure-img" alt="Performance of Different Models on Different Metrics"></p>
 </figure>
 </div>
@@ -389,8 +389,7 @@ McKinney, Wes. 2010. <span>“<span>D</span>ata <span>S</span>tructures for <spa
 Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. <span>“Scikit-Learn: Machine Learning in <span>P</span>ython.”</span> <em>Journal of Machine Learning Research</em> 12: 2825–30.
 </div>
 <div id="ref-tidyverse" class="csl-entry" role="doc-biblioentry">
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Ro
-François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

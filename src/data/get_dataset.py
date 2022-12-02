@@ -16,7 +16,7 @@ import time
 import zipfile
 
 
-def main(url, out_filepath):
+def main(url, out_filepath = None):
     """
     downloads the data to the data/raw folder
     """
@@ -24,6 +24,7 @@ def main(url, out_filepath):
     if out_filepath is None:
         out_filepath = os.path.join('data', 'raw', filename)
     try:
+        assert len(url.split(' ')) == 1
         if os.path.exists(out_filepath+'.csv'):
             print("Data already exist")
             return 0

@@ -1,0 +1,20 @@
+,columns,valid_count,unique_count
+0,Unnamed: 0,3119486,3119486
+1,date_received,3119486,4017
+2,product,3119486,18
+3,sub_product,2884193,76
+4,issue,3119486,165
+5,sub_issue,2435362,221
+6,consumer_complaint_narrative,1120842,978442
+7,company_public_response,1357765,11
+8,company,3119486,6578
+9,state,3079418,63
+10,zip_code,3078898,34461
+11,tags,352836,3
+12,consumer_consent_provided,2294928,4
+13,submitted_via,3119486,7
+14,date_sent_to_company,3119486,3966
+15,company_response_to_consumer,3119482,8
+16,timely_response,3119486,2
+17,consumer_disputed,768440,2
+18,complaint_id,3119486,3119486

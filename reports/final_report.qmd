@@ -42,7 +42,27 @@ Complaints can be responded to by the company in multiple ways but each consumer
 
 ### Data
 
-We used pandas[@pandas], scikit-learn[@scikit-learn], and TidyVerse [@tidyverse] to collect, analyze, and summarize our data. The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the \~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.
+We used pandas[@pandas], scikit-learn[@scikit-learn], and TidyVerse [@tidyverse] to collect, analyze, and summarize our data. The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. There are 18 columns included in the raw data of which the following 12 were focussed on to attempt to answer the study question. The remaining columns either had too many missing values or were id columns thus not likely to be useful.
+
+
+| Features                     | Description   |
+|:---:|:---------:|
+| consumer_complaint_narrative   | Text written by the cutsomer pertaining to the complaint    | 
+| product                      | The high level financial product to which the complaint relates  | 
+| sub_product                  | A specific product within the high level product category  |
+| issue                        | The type of complaint being raised | 
+| sub_issue                    | The low level type of issue submitted |
+| consumer_consent_provided    | Binary of whether the consumer provided consent to be contacted by the company |
+| timely_response              | Whether the company responded to the complaint within 15 days |
+| submitted_via                | The channel by which the complaint was lodged |
+| company_public_response      | How the company publically responded to the complaint |
+| company                      | The company's name against which the complaint was lodged |
+| company_response_to_consumer | How the company responded to the customer |
+| consumer_disputed | Did the consumer dispute the companies response/proposed resolution | 
+
+: Table 1: Primary dataset features used for analysis.
+
+Approximately 4.8% of all complaints are disputed, with the \~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.
 
 ![Figure 2. Class Imbalance in the Target Column](assets/disputed_bar.png)
 
@@ -53,20 +73,18 @@ table_data <- read_csv("./assets/unique_counts.csv") |>
   subset( select = -c(1) ) |>
   tail(-1)
 kable(table_data, 
-      caption = "Table 1. Unique and missing value counts by data feature.",
+      caption = "Table 2. Unique and missing value counts by data feature.",
       col.names = c("Fields", "Valid Count", "Unique Count"),
       align = "lcc"
       )
 
 ```
 
-### Analysis
+### Data Pre-Processing for Analysis
 
-A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.
+As the dataset is quite large, >3 million complaints, it was decided to start off by dropping any complaints which were missing one of the above features. This results in a training data set of ~200,000 complaints.
 
-Feature pre-processing approach and rationale is as follows:
-
-Table 2: Feature selection and encodings.
+Feature pre-processing approach for the modelling and rationale is as follows:
 
 +------------------------------+---------------------+--------------------------------------------+
 | Features                     | Preprocessing Step  | Rationale                                  |
@@ -81,27 +99,50 @@ Table 2: Feature selection and encodings.
 |                              |                     |                                            |
 | issue                        |                     |                                            |
 |                              |                     |                                            |
+| sub_issue                    |                     |                                            |
+|                              |                     |                                            |
 | company_public_response      |                     |                                            |
 |                              |                     |                                            |
 | company                      |                     |                                            |
 |                              |                     |                                            |
 | company_response_to_consumer |                     |                                            |
+|                              |                     |                                            |
+| state                        |                     |                                            |
+|                              |                     |                                            |
+| consumer_consent_provided    |                     |                                            |
+|                              |                     |                                            |
+| submitted via                |                     |                                            |
+|                              |                     |                                            |
+| timely_response              |                     |                                            |
 +------------------------------+---------------------+--------------------------------------------+
 | consumer_consent_provided    | dropped             | Only one value in this column              |
 +------------------------------+---------------------+--------------------------------------------+
 
-: These features were passed into a column transformer, which was then integrated with five different estimator for prediction.
+: Table 3: These features were passed into a column transformer, which was then integrated with five different estimators for prediction.
+
+### Analysis
+
+A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not. A `DummyClassifier` was used with the a most frequent approach which predicts the most frequent class (not disputed).
+
+The following scikit-learn models were trained and cross-validated on the training data set:
+
+- Logistic Regression
+- Support Vector Machine
+- Naive Bayes Classifier
+- Random Forest Classifier
+
+Cross validation scores on both the train and validation set were recorded. 
 
 ## Results & Discussion
 
-We applied the `DummyClassifier`, `LogisticRegression`, `Naive Bayes`, `SVC`, and `RandomForestClassifier` to predict the target whether the customer disputed. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation were as follows:
+We applied the `DummyClassifier`, `LogisticRegression`, `Naive Bayes`, `SVC`, and `RandomForestClassifier` to predict the targetwhich is whether the customer disputed the complaint or not. The models were applied using default parameters and a five-fold cross-validation were applied using the training split. We examined and recorded the accuracy, precision, recall, and f1 scores to be the metrics evaluating the models. The results of the cross validation were as follows:
 
 ```{r, message=FALSE}
 table_data <- read.csv("./assets/results.csv") 
 names(table_data)[1] <- ''
   
 kable(table_data, 
-      caption = "Table 3. Model Performance and Score.",
+      caption = "Table 4. Model Performance and Score.",
       col.names = c("Metric", "Dummy", "Logistic Regression", "Naive Bayes", "SVC", " Random Forest"),
       align = "cccccc"
 )

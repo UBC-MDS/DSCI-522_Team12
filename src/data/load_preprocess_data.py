@@ -93,6 +93,77 @@ def load_and_preprocess_raw_complaints_data(
     return raw_complaint_df
 
 
+def load_processed_complaints_data(
+    file_path: str, num_rows: Union[str, int] = "all", skip_rows: int = 0
+) -> pd.DataFrame:
+    """Reads in the processed complaints data and cleans up names and data types.
+
+    Parameters
+    ----------
+    file_path : string
+        Relative location of the "complaints.csv" file
+    num_rows : int, optional
+        How many rows of the csv to read in to help speed up analysis. If all entire
+        dataset is read in, by default "all"
+    skip_rows : int, optional
+        How many rows to skip from the start of the file, by default 0
+
+    Returns
+    -------
+    pd.DataFrame
+        The processed complaints data frame
+
+    Raises
+    ------
+    ValueError
+        Incorrect data types passed in for parameters.
+
+    Example
+    -------
+    raw_df = load_processed_complaints_data(
+        os.path.join(os.pardir, "data", "raw", "complaints.csv")
+    )
+    # OR
+    raw_df = load_processed_complaints_data(
+        os.path.join(os.pardir, "data", "raw", "complaints.csv"),
+        num_rows = 200000,
+        skip_rows=100000
+    )
+    """
+
+    # tell pandas we know there are mixed int/string values in these columns
+    # these are coerced after reading in
+    col_dtype_corrections = {"zip_code": object, "consumer_disputed": object}
+
+    if num_rows == "all":
+        processed_df = pd.read_csv(file_path, dtype=col_dtype_corrections)
+    elif (type(num_rows) == int) & (type(skip_rows) == int):
+        processed_df = pd.read_csv(
+            file_path, dtype=col_dtype_corrections, nrows=num_rows, skiprows=skip_rows
+        )
+    else:
+        raise ValueError(
+            f"Expected num_rows as 'all' or integer and skip_rows as "
+            f"integrer, got {type(num_rows)} and {type(skip_rows)}"
+        )
+
+    # basic first infer of object_types
+    processed_df = processed_df.infer_objects()
+
+    # any columns with date in the name converted to datetime
+    for col in [col for col in processed_df.columns if "date" in col]:
+        processed_df[col] = pd.to_datetime(processed_df[col])
+
+    # zip code column has non-permissable values, convert to numeric and NAN for bad vlaues
+    processed_df.zip_code = pd.to_numeric(
+        processed_df.zip_code,
+        errors="coerce",
+        downcast="integer",  # get into smallest data format
+    )
+
+    return processed_df
+
+
 def main():
 
     opt = docopt(__doc__)
@@ -102,7 +173,7 @@ def main():
     print("Loading and preprocessing raw complaints data...")
     preprocessed_df = load_and_preprocess_raw_complaints_data(file_path=raw_file_path)
     print("Done preprocessing, saving results....")
-    preprocessed_df.to_csv(output_file_path)
+    preprocessed_df.to_csv(output_file_path, index=False)
     print(f"Completed preprocessing successfully, data saved to: {output_file_path}")
 
 

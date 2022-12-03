@@ -22,7 +22,7 @@ SRC_PATH = cur_dir[
 if SRC_PATH not in sys.path:
     sys.path.append(SRC_PATH)
 
-from src.data.load_preprocess_data import load_and_preprocess_raw_complaints_data
+from src.data.load_preprocess_data import load_processed_complaints_data
 
 # # reading the docscript for the arguments
 # opt = docopt(__doc__)
@@ -52,7 +52,7 @@ def main(train, out_dir):
 
     if out_dir is None:
         out_dir = os.path.join("results", "assets")
-    complaints_df = load_and_preprocess_raw_complaints_data(train)
+    complaints_df = load_processed_complaints_data(train)
 
     # Table 1: Saves the unique and valid values
     unique_df = pd.DataFrame()

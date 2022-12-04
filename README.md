@@ -60,7 +60,7 @@ For the project to be correctly run, the following packages need to be installed
       - pandas==1.4.4
       - pytest==7.2.0
       - requests==2.28.1
-      - scikit_learn==1.1.3
+      - scikit-learn==1.1.3
       - docopt-ng==0.8.1
   - R version 4.2.1 and R packages:
       - tidyverse==1.3.2

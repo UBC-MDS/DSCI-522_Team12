@@ -33,7 +33,7 @@ SRC_PATH = cur_dir[
 ]
 if SRC_PATH not in sys.path:
     sys.path.append(SRC_PATH)
-
+from src.utils.utils import *
 from src.data.load_preprocess_data import load_processed_complaints_data
 
 warnings.filterwarnings("ignore")
@@ -52,11 +52,12 @@ def main(data_filepath, out_filepath):
 
     target = pd.DataFrame(complaints_df.value_counts("consumer_disputed")).reset_index()
     target.columns = ["consumer_disputed", "count"]
-    alt.Chart(target).mark_bar().encode(
+    chart = alt.Chart(target).mark_bar().encode(
         x=alt.X("consumer_disputed:O", title="Consumer Disputed"),
         y=alt.Y("count:Q", title="Count"),
         color="consumer_disputed:O",
-    ).save(os.path.join(out_filepath, "class_imbalance.png"))
+    )
+    save_chart(chart,os.path.join(out_filepath, "class_imbalance.png"))
     unique_df = pd.DataFrame()
     unique_df["columns"] = complaints_df.columns
     unique_df["valid_count"] = complaints_df.count(axis=0).reset_index()[0]
@@ -138,6 +139,14 @@ def main(data_filepath, out_filepath):
     res.to_csv(os.path.join(out_filepath, "results.csv"))
 
     res = res.reset_index()
+    source = res[2:].melt(id_vars=["index"])
+    source.columns = ["Metric", "Model", "Score"]
+    source["Metric"] = source["Metric"].str.replace("test_", "")
+    print("Generating the plot...")
+    chart = alt.Chart(source).mark_bar().encode(
+        x="Metric:O", y="Score:Q", color="Metric:N", column="Model:N"
+    )
+    save_chart(chart,os.path.join(out_filepath, "model_performance.png")) 
 
 def train_random_forest(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using random forest classifier
@@ -280,14 +289,6 @@ def train_dummy(X_train, y_train, preprocessor, scoring_metrics):
     return pd.DataFrame(cross_validate(
         pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
 
-=======
-    source = res[2:].melt(id_vars=["index"])
-    source.columns = ["Metric", "Model", "Score"]
-    source["Metric"] = source["Metric"].str.replace("test_", "")
-    print("Generating the plot...")
-    alt.Chart(source).mark_bar().encode(
-        x="Metric:O", y="Score:Q", color="Metric:N", column="Model:N"
-    ).save(os.path.join(out_filepath, "model_performance.png"))
 
 
 if __name__ == "__main__":

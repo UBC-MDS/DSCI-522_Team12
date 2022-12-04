@@ -1,6 +1,7 @@
-# from lecture DSCI 573
+# from lecture DSCI 573, Slack 522
 from sklearn.model_selection import cross_validate
 import pandas as pd
+import vl_convert as vlc
 def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
     """
     Returns mean and std of cross validation
@@ -29,3 +30,27 @@ def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
         out_col.append((f"%0.3f (+/- %0.3f)" % (mean_scores[i], std_scores[i])))
 
     return pd.Series(data=out_col, index=mean_scores.index)
+
+def save_chart(chart, filename, scale_factor=1):
+    '''
+    Save an Altair chart using vl-convert
+    
+    Parameters
+    ----------
+    chart : altair.Chart
+        Altair chart to save
+    filename : str
+        The path to save the chart to
+    scale_factor: int or float
+        The factor to scale the image resolution by.
+        E.g. A value of `2` means two times the default resolution.
+    '''
+    with alt.data_transformers.enable("default"), alt.data_transformers.disable_max_rows():
+        if filename.split('.')[-1] == 'svg':
+            with open(filename, "w") as f:
+                f.write(vlc.vegalite_to_svg(chart.to_dict()))
+        elif filename.split('.')[-1] == 'png':
+            with open(filename, "wb") as f:
+                f.write(vlc.vegalite_to_png(chart.to_dict(), scale=scale_factor))
+        else:
+            raise ValueError("Only svg and png formats are supported")

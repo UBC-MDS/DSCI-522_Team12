@@ -22,7 +22,7 @@ SRC_PATH = cur_dir[
 ]
 if SRC_PATH not in sys.path:
     sys.path.append(SRC_PATH)
-
+from src.utils.utils import save_chart
 from src.data.load_preprocess_data import load_processed_complaints_data
 
 # # reading the docscript for the arguments
@@ -98,7 +98,7 @@ def main(train, out_dir):
     )
     print("Plot Generated")
     print("Saving the Missing Values plot")
-    missing_vals.save(os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))
+    save_chart(missing_vals,os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))
     print("Plot saved")
 
     # Plot 2: Complaints over time
@@ -119,9 +119,7 @@ def main(train, out_dir):
         .properties(width=700, height=400)
     )
     print("Plot generated - now saving it")
-    complaints_over_time.save(
-        os.path.join(os.getcwd(), out_dir, "complaints_over_time_line.png")
-    )
+    save_chart(complaints_over_time,os.getcwd(), out_dir, "complaints_over_time_line.png")
     print("Plot saved")
 
     # Plot 3: Disputed Bar Chart
@@ -139,7 +137,7 @@ def main(train, out_dir):
         .properties(width=600, height=300)
     )
     print("Plot generated - now saving it in the assets folder")
-    disputed_cust.save(os.path.join(os.getcwd(), out_dir, "disputed_bar.png"))
+    save_chart(disputed_cust,os.path.join(os.getcwd(), out_dir, "disputed_bar.png"))
     print("Plot saved")
 
 

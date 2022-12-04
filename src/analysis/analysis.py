@@ -10,6 +10,7 @@ Options:
 """
 
 import os
+import sys
 import altair as alt
 import pandas as pd
 import warnings
@@ -25,6 +26,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+
+cur_dir = os.getcwd()
+SRC_PATH = cur_dir[
+    : cur_dir.index("customer_complaint_analyzer") + len("customer_complaint_analyzer")
+]
+if SRC_PATH not in sys.path:
+    sys.path.append(SRC_PATH)
+
+from src.data.load_preprocess_data import load_processed_complaints_data
+
 warnings.filterwarnings("ignore")
 opt = docopt(__doc__)
 
@@ -33,62 +44,72 @@ def main(data_filepath, out_filepath):
     """
     perform analysis using different models and generate the results
     """
-    print('Starting analysis. Note it is OK to see warnings about columns being set to zeros.')
-    print('Loading dataset...')
-    complaints_df = pd.read_csv(data_filepath)
-    
-    target = pd.DataFrame(complaints_df.value_counts('consumer_disputed')).reset_index()
-    target.columns = ['consumer_disputed','count']
+    print(
+        "Starting analysis. Note it is OK to see warnings about columns being set to zeros."
+    )
+    print("Loading dataset...")
+    complaints_df = load_processed_complaints_data(data_filepath)
+
+    target = pd.DataFrame(complaints_df.value_counts("consumer_disputed")).reset_index()
+    target.columns = ["consumer_disputed", "count"]
     alt.Chart(target).mark_bar().encode(
-        x=alt.X('consumer_disputed:O',title = 'Consumer Disputed'),
-        y=alt.Y('count:Q',title = 'Count'),
-        color='consumer_disputed:O',
-    ).save(os.path.join(out_filepath,'class_imbalance.png'))
+        x=alt.X("consumer_disputed:O", title="Consumer Disputed"),
+        y=alt.Y("count:Q", title="Count"),
+        color="consumer_disputed:O",
+    ).save(os.path.join(out_filepath, "class_imbalance.png"))
     unique_df = pd.DataFrame()
-    unique_df['columns'] = complaints_df.columns
-    unique_df['valid_count'] = complaints_df.count(axis=0).reset_index()[0]
-    unique_df['unique_count'] = complaints_df.nunique().reset_index()[0]
-    unique_df.to_csv(os.path.join(out_filepath,'unique_counts.csv'))
-    complaints_df = complaints_df.iloc[: , 1:]
-    complaints_df = complaints_df.query('not consumer_disputed.isnull()')
-    complaints_df['consumer_disputed'].replace(['Yes','No'],[1,0], inplace = True)
-    
-    drop_features = ['date_received',
-                    'zip_code',
-                    'tags',
-                    'date_sent_to_company',
-                    'complaint_id']
-    complaints_df = complaints_df.drop(columns = drop_features).dropna()
-    print('Splitting dataset...')
-    train_df, test_df = train_test_split(complaints_df,test_size=0.2, random_state=123)
-    
-    X_train, y_train = train_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
+    unique_df["columns"] = complaints_df.columns
+    unique_df["valid_count"] = complaints_df.count(axis=0).reset_index()[0]
+    unique_df["unique_count"] = complaints_df.nunique().reset_index()[0]
+    unique_df.to_csv(os.path.join(out_filepath, "unique_counts.csv"))
+
+    complaints_df = complaints_df.query("not consumer_disputed.isnull()")
+    complaints_df["consumer_disputed"].replace(["Yes", "No"], [1, 0], inplace=True)
+
+    drop_features = [
+        "date_received",
+        "zip_code",
+        "tags",
+        "date_sent_to_company",
+        "complaint_id",
+    ]
+    complaints_df = complaints_df.drop(columns=drop_features).dropna()
+    print("Splitting dataset...")
+    train_df, test_df = train_test_split(complaints_df, test_size=0.2, random_state=123)
+
+    X_train, y_train = (
+        train_df.drop(columns=["consumer_disputed"]),
+        train_df["consumer_disputed"],
+    )
     # X_test, y_test = test_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
-    
-    categorical_features = ['product',
-                            'sub_product',
-                            'issue',
-                            'sub_issue',
-                            'company_public_response', 
-                            'company',
-                            'state',
-                            'consumer_consent_provided',
-                            'consumer_consent_provided',
-                            'submitted_via',
-                            'company_response_to_consumer',
-                            'timely_response']
-    drop_features = ['consumer_consent_provided',
-                     'submitted_via']
 
+    categorical_features = [
+        "product",
+        "sub_product",
+        "issue",
+        "sub_issue",
+        "company_public_response",
+        "company",
+        "state",
+        "consumer_consent_provided",
+        "consumer_consent_provided",
+        "submitted_via",
+        "company_response_to_consumer",
+        "timely_response",
+    ]
+    drop_features = ["consumer_consent_provided", "submitted_via"]
 
-    text_feature = 'consumer_complaint_narrative'
+    text_feature = "consumer_complaint_narrative"
 
     preprocessor = make_column_transformer(
-        (OneHotEncoder(handle_unknown = 'ignore',
-                    drop='if_binary'), categorical_features),
-        (CountVectorizer(stop_words='english', max_features = 3000), text_feature),
-        ('drop', drop_features))
-    scoring_metrics = ['accuracy','recall','precision','f1']
+        (
+            OneHotEncoder(handle_unknown="ignore", drop="if_binary"),
+            categorical_features,
+        ),
+        (CountVectorizer(stop_words="english", max_features=3000), text_feature),
+        ("drop", drop_features),
+    )
+    scoring_metrics = ["accuracy", "recall", "precision", "f1"]
     cross_val_results = {}
     
     print('Analyzing baseline model...')
@@ -113,21 +134,10 @@ def main(data_filepath, out_filepath):
             
     res = pd.concat(cross_val_results, axis=1)
     res.columns = res.columns.droplevel(1)
-    print('Saving tabular results...')
-    res.to_csv(os.path.join(out_filepath,'results.csv'))
-    
+    print("Saving tabular results...")
+    res.to_csv(os.path.join(out_filepath, "results.csv"))
+
     res = res.reset_index()
-    
-    source = res[2:].melt(id_vars=['index'])
-    source.columns = ['Metric','Model','Score']
-    source['Metric'] = source['Metric'].str.replace('test_','')
-    print('Generating the plot...')
-    alt.Chart(source).mark_bar().encode(
-        x='Metric:O',
-        y='Score:Q',
-        color='Metric:N',
-        column='Model:N'
-    ).save(os.path.join(out_filepath,'model_performance.png'))
 
 def train_random_forest(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using random forest classifier
@@ -270,6 +280,14 @@ def train_dummy(X_train, y_train, preprocessor, scoring_metrics):
     return pd.DataFrame(cross_validate(
         pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
 
+=======
+    source = res[2:].melt(id_vars=["index"])
+    source.columns = ["Metric", "Model", "Score"]
+    source["Metric"] = source["Metric"].str.replace("test_", "")
+    print("Generating the plot...")
+    alt.Chart(source).mark_bar().encode(
+        x="Metric:O", y="Score:Q", color="Metric:N", column="Model:N"
+    ).save(os.path.join(out_filepath, "model_performance.png"))
 
 
 if __name__ == "__main__":

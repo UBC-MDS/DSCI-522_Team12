@@ -71,8 +71,10 @@ div.csl-indent {
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="toc-section-number">2</span>  Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="toc-section-number">3</span>  Methods</a>
   <ul class="collapse">
+
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="toc-section-number">3.1</span>  Data</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="toc-section-number">3.2</span>  Analysis</a></li>
+
   </ul></li>
   <li><a href="#results-discussion" id="toc-results-discussion" class="nav-link" data-scroll-target="#results-discussion"><span class="toc-section-number">4</span>  Results &amp; Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5</span>  Conclusion</a></li>
@@ -125,7 +127,71 @@ div.csl-indent {
 <h2 data-number="3" class="anchored" data-anchor-id="methods"><span class="header-section-number">3</span> Methods</h2>
 <section id="data" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">3.1</span> Data</h3>
-<p>We used pandas<span class="citation" data-cites="pandas">(<a href="#ref-pandas" role="doc-biblioref">McKinney 2010</a>)</span>, scikit-learn<span class="citation" data-cites="scikit-learn">(<a href="#ref-scikit-learn" role="doc-biblioref">Pedregosa et al. 2011</a>)</span>, and TidyVerse <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> to collect, analyze, and summarize our data. The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
+<p>We used pandas<span class="citation" data-cites="pandas">(<a href="#ref-pandas" role="doc-biblioref">McKinney 2010</a>)</span>, scikit-learn<span class="citation" data-cites="scikit-learn">(<a href="#ref-scikit-learn" role="doc-biblioref">Pedregosa et al. 2011</a>)</span>, and TidyVerse <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> to collect, analyze, and summarize our data. The CFPB database contains ~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. There are 18 columns included in the raw data of which the following 12 were focussed on to attempt to answer the study question. The remaining columns either had too many missing values or were id columns thus not likely to be useful.</p>
+<table class="table">
+<caption>Table 1: Primary dataset features used for analysis.</caption>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Features</th>
+<th style="text-align: center;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">consumer_complaint_narrative</td>
+<td style="text-align: center;">Text written by the cutsomer pertaining to the complaint</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">product</td>
+<td style="text-align: center;">The high level financial product to which the complaint relates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">sub_product</td>
+<td style="text-align: center;">A specific product within the high level product category</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">issue</td>
+<td style="text-align: center;">The type of complaint being raised</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">sub_issue</td>
+<td style="text-align: center;">The low level type of issue submitted</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">consumer_consent_provided</td>
+<td style="text-align: center;">Binary of whether the consumer provided consent to be contacted by the company</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">timely_response</td>
+<td style="text-align: center;">Whether the company responded to the complaint within 15 days</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">submitted_via</td>
+<td style="text-align: center;">The channel by which the complaint was lodged</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">company_public_response</td>
+<td style="text-align: center;">How the company publically responded to the complaint</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">company</td>
+<td style="text-align: center;">The company’s name against which the complaint was lodged</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">company_response_to_consumer</td>
+<td style="text-align: center;">How the company responded to the customer</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">consumer_disputed</td>
+<td style="text-align: center;">Did the consumer dispute the companies response/proposed resolution</td>
+</tr>
+</tbody>
+</table>
+<p>Approximately 4.8% of all complaints are disputed, with the ~75.1% of complaints having an unknown dispute status. Figure 2 below shows the balance of dispute status.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p></p><figcaption class="figure-caption">Figure 2. Class Imbalance in the Target Column</figcaption><p></p>
@@ -136,7 +202,7 @@ div.csl-indent {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
-<caption>Table 1. Unique and missing value counts by data feature.</caption>
+<caption>Table 2. Unique and missing value counts by data feature.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Fields</th>
@@ -240,13 +306,12 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="analysis" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">3.2</span> Analysis</h3>
-<p>A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not.</p>
-<p>Feature pre-processing approach and rationale is as follows:</p>
-<p>Table 2: Feature selection and encodings.</p>
+<section id="data-pre-processing-for-analysis" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="data-pre-processing-for-analysis"><span class="header-section-number">3.2</span> Data Pre-Processing for Analysis</h3>
+<p>As the dataset is quite large, &gt;3 million complaints, it was decided to start off by dropping any complaints which were missing one of the above features. This results in a training data set of ~200,000 complaints.</p>
+<p>Feature pre-processing approach for the modelling and rationale is as follows:</p>
 <table class="table">
-<caption>These features were passed into a column transformer, which was then integrated with five different estimator for prediction.</caption>
+<caption>Table 3: These features were passed into a column transformer, which was then integrated with five different estimators for prediction.</caption>
 <colgroup>
 <col style="width: 31%">
 <col style="width: 22%">
@@ -270,9 +335,14 @@ div.csl-indent {
 <td><p>product</p>
 <p>sub_product</p>
 <p>issue</p>
+<p>sub_issue</p>
 <p>company_public_response</p>
 <p>company</p>
-<p>company_response_to_consumer</p></td>
+<p>company_response_to_consumer</p>
+<p>state</p>
+<p>consumer_consent_provided</p>
+<p>submitted via</p>
+<p>timely_response</p></td>
 <td><p>OneHotEncoder</p>
 <p>drop = “if_binary”</p></td>
 <td>Each field is categorical</td>
@@ -285,6 +355,18 @@ div.csl-indent {
 </tbody>
 </table>
 </section>
+<section id="analysis" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="analysis"><span class="header-section-number">3.3</span> Analysis</h3>
+<p>A predictive approach using multiple classification models was used to attempt to predict whether a consumer would dispute a complaint or not. A <code>DummyClassifier</code> was used with the a most frequent approach which predicts the most frequent class (not disputed).</p>
+<p>The following scikit-learn models were trained and cross-validated on the training data set:</p>
+<ul>
+<li>Logistic Regression</li>
+<li>Support Vector Machine</li>
+<li>Naive Bayes Classifier</li>
+<li>Random Forest Classifier</li>
+</ul>
+<p>Corss validation scores on both the train and validation set were recorded.</p>
+</section>
 </section>
 <section id="results-discussion" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="results-discussion"><span class="header-section-number">4</span> Results &amp; Discussion</h2>
@@ -292,7 +374,7 @@ div.csl-indent {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
-<caption>Table 3. Model Performance and Score.</caption>
+<caption>Table 4. Model Performance and Score.</caption>
 <colgroup>
 <col style="width: 19%">
 <col style="width: 8%">

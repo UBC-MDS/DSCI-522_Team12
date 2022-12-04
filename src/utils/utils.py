@@ -2,6 +2,7 @@
 from sklearn.model_selection import cross_validate
 import pandas as pd
 import vl_convert as vlc
+import altair as alt
 def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
     """
     Returns mean and std of cross validation

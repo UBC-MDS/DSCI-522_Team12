@@ -64,7 +64,8 @@ For the project to be correctly run, the following packages need to be installed
       - docopt-ng==0.8.1
   - R version 4.2.1 and R packages:
       - tidyverse==1.3.2
-  - GNU make 3.81
+  - [GNU make 4.3](https://downloads.sourceforge.net/project/ezwinports/make-4.3-without-guile-w32-bin.zip)
+  - [quarto CLI](https://quarto.org/docs/get-started/)
 
 
 ## Usage
@@ -82,6 +83,27 @@ Running the following command from the
 root directory of this project could clean up the analysis to its initial state:
 ```
 make clean
+```
+If the single `make` command did not work, we here also provide a step-by-step prodecure on how to reproduce the analysis:
+
+```
+# Accessing and downloading the raw data
+python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
+
+# Cleaning & preprocessing the raw data
+python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
+
+# Generating the EDA results 
+python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
+
+# Running the analysis
+python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
+
+# Genrating the final report
+# ON windows where quarto.exe is not found in path from git bash
+quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
+# Or on Mac/Linux with Quarto in path
+quarto render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
 ```
 
 ## Contributing

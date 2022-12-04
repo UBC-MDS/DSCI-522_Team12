@@ -10,8 +10,7 @@ course in the Masters of Data Science program at the University of
 British Columbia.
 ## Report
 
-
-The reported is located in [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
+The final report is located [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
 
 ## Project proposal
 
@@ -52,36 +51,37 @@ To output a pip formatted `requirements.txt` use the following command to genera
 pip list --format=freeze > requirements.txt
 ```
 
-## Exploratory Data Analysis (EDA)
+## Dependencies
+For the project to be correctly run, the following packages need to be installed. If the steps from the above could not be executed corrected, please make sure you have the following packages available in your environment by manual installation:
 
-The initial EDA is located in [`notebooks/1.0-final-customer-complaint-eda.ipynb`](./notebooks/1.0-final-customer-complaint-eda.ipynb).
+  - Python 3.7.3 and Python packages:
+      - altair==4.2.0
+      - numpy==1.23.5
+      - pandas==1.4.4
+      - pytest==7.2.0
+      - requests==2.28.1
+      - scikit_learn==1.1.3
+      - docopt-ng==0.8.1
+  - R version 4.2.1 and R packages:
+      - tidyverse==1.3.2
+  - GNU make 3.81
 
-## Running Full Analysis Pipeline
 
-To start from the base repo and access, clean, analyze and generate the final reports you can use the following series of commands.
+## Usage
 
-Here is how the process works:
+
+Here is how the analysis process works:
 ![](reports/assets/analysis-pipeline-overview.jpg)
 
-Below are all the commands/options you can copy/paste from:
-```bash
-# Accessing and downloading the raw data
-python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
-
-# Cleaning & preprocessing the raw data
-python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
-
-# Generating the EDA results 
-python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
-
-# Running the analysis
-python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
-
-# Genrating the final report
-# ON windows where quarto.exe is not found in path from git bash
-quarto.cmd render reports/milestone-2-report.qmd --to html -P output_dir="reports"
-# Or on Mac/Linux with Quarto in path
-quarto render reports/milestone-2-report.qmd --to html -P output_dir="reports"
+To start from the base repo and access, clean, analyze and generate the final reports you can run the following command from the
+root directory of this project. Note that it is OK to observe `UserWarning` during the model training:
+```
+make
+```
+Running the following command from the
+root directory of this project could clean up the analysis to its initial state:
+```
+make clean
 ```
 
 ## Contributing

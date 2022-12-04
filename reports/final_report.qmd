@@ -17,7 +17,7 @@ format:
     number-sections: true
     colorlinks: true
 params: 
-  output_dir: "reports"
+  output_file: "reports"
 fig-cap-location: top
 ---
 
@@ -152,9 +152,9 @@ Figure 3 below illustrates a visual representation of the performance of the mod
 
 ![Figure 3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}
 
-The results above motivates us to choose `LogisticRegression` as the final estimator. It has one of the overall highest f1 scores at 0.368 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
+The results above motivates us to choose `LogisticRegression` as the final estimator. It has one of the overall highest f1 scores at 0.358 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
 
-Unfortunately, an f1 score of 0.368 for `LogisticRegression` is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.
+Unfortunately, an f1 score of 0.358 for `LogisticRegression` is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.
 
 ## Conclusion
 

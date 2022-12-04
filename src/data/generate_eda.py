@@ -14,7 +14,8 @@ import os
 import pandas as pd
 import numpy as np
 import altair as alt
-
+import warnings
+warnings.filterwarnings("ignore")
 cur_dir = os.getcwd()
 SRC_PATH = cur_dir[
     : cur_dir.index("customer_complaint_analyzer") + len("customer_complaint_analyzer")

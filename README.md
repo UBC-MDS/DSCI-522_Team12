@@ -12,19 +12,22 @@ British Columbia.
 
 The final report is located [here](https://ubc-mds.github.io/customer_complaint_analyzer/reports/final_report.html)
 
+## Data
+
+We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in in DATA.GOV and it is intended for public access and use. This is a collection of customer complaints regarding their purchased financial products and services that were sent to companies for response. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response. It contains important imformation about the issues and the sub-issues of the complaints, details about how the company responded to them and which states/zip codes they are from and whether the customer was disputed or not after the company's response.
+
 ## Project proposal
 
-We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in in DATA.GOV and it is intended for public access and use. This dataset is a collection of customer complaints regarding their purchased financial products. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response.
-
-We aim to answer the following inferential and/or predictive questions: 
+We aim to answer the following inferential and/or predictive questions for our analysis: 
 - **Can we predict whether a customer is going to dispute based on their complaint and the company's response?** This question may induce inferential sub-questions such as
 - **What kind of response from the company is most likely to prevent the customer from disputing the service?**
 - **When submitting a claim what is your probability of getting monetary compensation, responses in a timely manner etc. to give to consumers when submitting a complaint**
-- **What kind of complaint cannot be easily resolved?** We will focus on the main question and target the subproblem if we have time.
+- **What kind of complaint cannot be easily resolved?** 
+We will focus on the main question and target the subproblem with time permitting.
 
-We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `Ridge` regression. Given the size of the data, it might be challenging to apply complex models to train in the time we have. We may try complex models with a partition of the dataset to see the performance of other models.
+We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `Ridge` regression. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
 
-Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints. We will first split the data into training and test set. In the training set, we will visualize if the class is imbalanced to find the strategy of model building. A visualization determining whether a large number of unique values appear in a column will be created. 
+Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints that would give us more details about how and what kind of complaints raised the most disputes, which companies had the most disputes and how quickly they were resolved. We will first split the data into training and test set using a 80/20 split. In the training set, we will visualize if the class is imbalanced and then find appropriate strategies of model building in order to maximize our result accuracy. We also visualized the unique and null values that appear in our dataset in order to get a holistic idea of the data spread and then use that to proceed with the data preprocessing and cleaning strategies before we start training with our models.  
 
 ## Requirements
 

@@ -119,7 +119,8 @@ def main(train, out_dir):
         .properties(width=700, height=400)
     )
     print("Plot generated - now saving it")
-    save_chart(complaints_over_time,os.getcwd(), out_dir, "complaints_over_time_line.png")
+    save_chart(complaints_over_time,
+               os.path.join(os.getcwd(), out_dir, "complaints_over_time_line.png"))
     print("Plot saved")
 
     # Plot 3: Disputed Bar Chart

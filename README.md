@@ -54,7 +54,7 @@ pip list --format=freeze > requirements.txt
 ## Dependencies
 For the project to be correctly run, the following packages need to be installed. If the steps from the above could not be executed corrected, please make sure you have the following packages available in your environment by manual installation:
 
-  - Python 3.7.3 and Python packages:
+  - Python 3.10.8 and Python packages:
       - altair==4.2.0
       - numpy==1.23.5
       - pandas==1.4.4

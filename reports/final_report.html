@@ -130,8 +130,8 @@ div.csl-indent {
 <table class="table">
 <caption>Table 1: Primary dataset features used for analysis.</caption>
 <colgroup>
-<col style="width: 31%">
-<col style="width: 68%">
+<col style="width: 27%">
+<col style="width: 72%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -307,9 +307,9 @@ div.csl-indent {
 <table class="table">
 <caption>Table 3: These features were passed into a column transformer, which was then integrated with five different estimators for prediction.</caption>
 <colgroup>
-<col style="width: 31%">
-<col style="width: 22%">
-<col style="width: 45%">
+<col style="width: 34%">
+<col style="width: 24%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -447,8 +447,8 @@ div.csl-indent {
 <p><img src="assets/model_performance.png" class="img-fluid figure-img" alt="Performance of Different Models on Different Metrics"></p>
 </figure>
 </div>
-<p>The results above motivates us to choose <code>LogisticRegression</code> as the final estimator. It has one of the overall highest f1 scores at 0.368 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that <code>SVC</code> gives slightly higher scores than <code>LogisticRegression</code>; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose <code>LogisticRegression</code> over <code>SVC</code> due to its scalability and interpretability.</p>
-<p>Unfortunately, an f1 score of 0.368 for <code>LogisticRegression</code> is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.</p>
+<p>The results above motivates us to choose <code>LogisticRegression</code> as the final estimator. It has one of the overall highest f1 scores at 0.353 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that <code>SVC</code> gives slightly higher scores than <code>LogisticRegression</code>; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose <code>LogisticRegression</code> over <code>SVC</code> due to its scalability and interpretability.</p>
+<p>Unfortunately, an f1 score of 0.353 for <code>LogisticRegression</code> is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.</p>
 </section>
 <section id="conclusion" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>

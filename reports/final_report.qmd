@@ -44,21 +44,33 @@ Complaints can be responded to by the company in multiple ways but each consumer
 
 We used pandas[@pandas], scikit-learn[@scikit-learn], and TidyVerse [@tidyverse] to collect, analyze, and summarize our data. The CFPB database contains \~3 million complaints starting from December 2011 all the way up to November 2022 when this report was written. There are 18 columns included in the raw data of which the following 12 were focussed on to attempt to answer the study question. The remaining columns either had too many missing values or were id columns thus not likely to be useful.
 
-
-| Features                     | Description   |
-|:---:|:---------:|
-| consumer_complaint_narrative   | Text written by the cutsomer pertaining to the complaint    | 
-| product                      | The high level financial product to which the complaint relates  | 
-| sub_product                  | A specific product within the high level product category  |
-| issue                        | The type of complaint being raised | 
-| sub_issue                    | The low level type of issue submitted |
++------------------------------+--------------------------------------------------------------------------------+
+| Features                     | Description                                                                    |
++:============================:+:==============================================================================:+
+| consumer_complaint_narrative | Text written by the cutsomer pertaining to the complaint                       |
++------------------------------+--------------------------------------------------------------------------------+
+| product                      | The high level financial product to which the complaint relates                |
++------------------------------+--------------------------------------------------------------------------------+
+| sub_product                  | A specific product within the high level product category                      |
++------------------------------+--------------------------------------------------------------------------------+
+| issue                        | The type of complaint being raised                                             |
++------------------------------+--------------------------------------------------------------------------------+
+| sub_issue                    | The low level type of issue submitted                                          |
++------------------------------+--------------------------------------------------------------------------------+
 | consumer_consent_provided    | Binary of whether the consumer provided consent to be contacted by the company |
-| timely_response              | Whether the company responded to the complaint within 15 days |
-| submitted_via                | The channel by which the complaint was lodged |
-| company_public_response      | How the company publically responded to the complaint |
-| company                      | The company's name against which the complaint was lodged |
-| company_response_to_consumer | How the company responded to the customer |
-| consumer_disputed | Did the consumer dispute the companies response/proposed resolution | 
++------------------------------+--------------------------------------------------------------------------------+
+| timely_response              | Whether the company responded to the complaint within 15 days                  |
++------------------------------+--------------------------------------------------------------------------------+
+| submitted_via                | The channel by which the complaint was lodged                                  |
++------------------------------+--------------------------------------------------------------------------------+
+| company_public_response      | How the company publically responded to the complaint                          |
++------------------------------+--------------------------------------------------------------------------------+
+| company                      | The company's name against which the complaint was lodged                      |
++------------------------------+--------------------------------------------------------------------------------+
+| company_response_to_consumer | How the company responded to the customer                                      |
++------------------------------+--------------------------------------------------------------------------------+
+| consumer_disputed            | Did the consumer dispute the companies response/proposed resolution            |
++------------------------------+--------------------------------------------------------------------------------+
 
 : Table 1: Primary dataset features used for analysis.
 
@@ -82,41 +94,41 @@ kable(table_data,
 
 ### Data Pre-Processing for Analysis
 
-As the dataset is quite large, >3 million complaints, it was decided to start off by dropping any complaints which were missing one of the above features. This results in a training data set of ~200,000 complaints.
+As the dataset is quite large, \>3 million complaints, it was decided to start off by dropping any complaints which were missing one of the above features. This results in a training data set of \~200,000 complaints.
 
 Feature pre-processing approach for the modelling and rationale is as follows:
 
-+------------------------------+---------------------+--------------------------------------------+
-| Features                     | Preprocessing Step  | Rationale                                  |
-+==============================+=====================+============================================+
-| consumer_complaint_narrative | CountVectorizer     | High Amount of Unique Textual Data         |
-|                              |                     |                                            |
-|                              | max_features = 1000 |                                            |
-+------------------------------+---------------------+--------------------------------------------+
-| product                      | OneHotEncoder       | Each field is categorical                  |
-|                              |                     |                                            |
-| sub_product                  | drop = "if_binary"  |                                            |
-|                              |                     |                                            |
-| issue                        |                     |                                            |
-|                              |                     |                                            |
-| sub_issue                    |                     |                                            |
-|                              |                     |                                            |
-| company_public_response      |                     |                                            |
-|                              |                     |                                            |
-| company                      |                     |                                            |
-|                              |                     |                                            |
-| company_response_to_consumer |                     |                                            |
-|                              |                     |                                            |
-| state                        |                     |                                            |
-|                              |                     |                                            |
-| consumer_consent_provided    |                     |                                            |
-|                              |                     |                                            |
-| submitted via                |                     |                                            |
-|                              |                     |                                            |
-| timely_response              |                     |                                            |
-+------------------------------+---------------------+--------------------------------------------+
-| consumer_consent_provided    | dropped             | Only one value in this column              |
-+------------------------------+---------------------+--------------------------------------------+
++------------------------------+---------------------+------------------------------------+
+| Features                     | Preprocessing Step  | Rationale                          |
++==============================+=====================+====================================+
+| consumer_complaint_narrative | CountVectorizer     | High Amount of Unique Textual Data |
+|                              |                     |                                    |
+|                              | max_features = 1000 |                                    |
++------------------------------+---------------------+------------------------------------+
+| product                      | OneHotEncoder       | Each field is categorical          |
+|                              |                     |                                    |
+| sub_product                  | drop = "if_binary"  |                                    |
+|                              |                     |                                    |
+| issue                        |                     |                                    |
+|                              |                     |                                    |
+| sub_issue                    |                     |                                    |
+|                              |                     |                                    |
+| company_public_response      |                     |                                    |
+|                              |                     |                                    |
+| company                      |                     |                                    |
+|                              |                     |                                    |
+| company_response_to_consumer |                     |                                    |
+|                              |                     |                                    |
+| state                        |                     |                                    |
+|                              |                     |                                    |
+| consumer_consent_provided    |                     |                                    |
+|                              |                     |                                    |
+| submitted via                |                     |                                    |
+|                              |                     |                                    |
+| timely_response              |                     |                                    |
++------------------------------+---------------------+------------------------------------+
+| consumer_consent_provided    | dropped             | Only one value in this column      |
++------------------------------+---------------------+------------------------------------+
 
 : Table 3: These features were passed into a column transformer, which was then integrated with five different estimators for prediction.
 
@@ -126,12 +138,12 @@ A predictive approach using multiple classification models was used to attempt t
 
 The following scikit-learn models were trained and cross-validated on the training data set:
 
-- Logistic Regression
-- Support Vector Machine
-- Naive Bayes Classifier
-- Random Forest Classifier
+-   Logistic Regression
+-   Support Vector Machine
+-   Naive Bayes Classifier
+-   Random Forest Classifier
 
-Cross validation scores on both the train and validation set were recorded. 
+Cross validation scores on both the train and validation set were recorded.
 
 ## Results & Discussion
 
@@ -146,15 +158,17 @@ kable(table_data,
       col.names = c("Metric", "Dummy", "Logistic Regression", "Naive Bayes", "SVC", " Random Forest"),
       align = "cccccc"
 )
+
+  
 ```
 
 Figure 3 below illustrates a visual representation of the performance of the models. We observe a high accuracy of the `DummyClassifier`. Given the imbalance of the class, the accuracy would not be an important metric in this problem. Instead, from the company's perspective, we focus more on improving the precision, the recall, and the f1 score. Noticeably the company likely wants to spot the people who are going to dispute, thus, the recall score here is more important compared to precision.
 
 ![Figure 3: Performance of Different Models on Different Metrics](assets/model_performance.png){fig-alt="Performance of Different Models on Different Metrics" fig-align="center"}
 
-The results above motivates us to choose `LogisticRegression` as the final estimator. It has one of the overall highest f1 scores at 0.358 and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
+The results above motivates us to choose `LogisticRegression` as the final estimator. It has one of the overall highest f1 scores at `r as.numeric(slice(select(table_data,'logreg'),6))` and among the recall is among highest scores. Though it sacrifices some accuracy, the precision, recall, and f1 scores are significantly improved uon the dummy classifier and competitive with the other models evaluated. We also see that `SVC` gives slightly higher scores than `LogisticRegression`; however, in Table 2 we see that it takes substantially more time to train and cross validate. in addition, due to the complexity of the model we also lose a degree of model incontestability. Overall, we choose `LogisticRegression` over `SVC` due to its scalability and interpretability.
 
-Unfortunately, an f1 score of 0.358 for `LogisticRegression` is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.
+Unfortunately, an f1 score of `r as.numeric(slice(select(table_data,'logreg'),6))` for `LogisticRegression` is quite low and unlikely to be particularly useful in the broader business sense. This analysis can be used as the basis to understand what target f1, precision or recall target scores should be set for further analysis.
 
 ## Conclusion
 

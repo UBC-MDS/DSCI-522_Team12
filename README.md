@@ -77,6 +77,21 @@ For the project to be correctly run, the following packages need to be installed
 Here is how the analysis process works:
 ![](reports/assets/analysis-pipeline-overview.jpg)
 
+### Docker Notes
+
+```
+docker run --rm -v "$(pwd):/home/jovyan/work" jl_test:0.1.0 make -C "/home/jovyan/work" all
+```
+
+```
+docker build --tag jl_test:0.1.0 .
+```
+
+```
+docker run --rm -v "$(pwd):/home/jovyan/work" jl_test:0.2.0 make -C "/home/jovyan/work" all
+```
+
+### Make
 To start from the base repo and access, clean, analyze and generate the final reports you can run the following command from the
 root directory of this project. Note that it is OK to observe `UserWarning` during the model training:
 ```

@@ -1,10 +1,10 @@
 # Docker file for the customer complaint analyzer project
 # Luke Yang, Dec, 2022
 
-# use jupyter/jupyter/datascience-notebook as the base image 
-FROM jupyter/jupyter/datascience-notebook
+# use jupyter/datascience-notebook as the base image 
+FROM jupyter/datascience-notebook
 
-
+USER root
 
 # install the required packages
 RUN pip install altair==4.2.0\
@@ -18,4 +18,23 @@ RUN pip install altair==4.2.0\
     altair_data_server==0.4.1\
     altair_saver==0.5.0\
     selenium==4.2.0\
-    vl-convert-python\
+    vl-convert-python
+
+RUN export QUARTO_VERSION="1.2.262"
+
+
+# RUN mkdir -p /opt/quarto/${QUARTO_VERSION}
+
+# RUN curl -o quarto.tar.gz -L \
+#     "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+
+RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+# RUN sudo tar -zxvf quarto.tar.gz \
+#     -C "/opt/quarto/${QUARTO_VERSION}" \
+#     --strip-components=1
+RUN sudo apt-get update
+RUN sudo apt-get install gdebi-core -y
+
+RUN sudo gdebi quarto-linux-amd64.deb 
+# RUN rm quarto.tar.gz
+# RUN ln -s /opt/quarto/${QUARTO_VERSION}/bin/quarto /usr/local/bin/quarto

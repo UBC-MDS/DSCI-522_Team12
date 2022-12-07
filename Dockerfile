@@ -6,6 +6,7 @@ FROM jupyter/datascience-notebook
 
 USER root
 
+RUN sudo apt-get update
 # install the required packages
 RUN pip install altair==4.2.0\
     docopt==0.6.2\
@@ -32,9 +33,10 @@ RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 # RUN sudo tar -zxvf quarto.tar.gz \
 #     -C "/opt/quarto/${QUARTO_VERSION}" \
 #     --strip-components=1
-RUN sudo apt-get update
 RUN sudo apt-get install gdebi-core -y
 
-RUN sudo gdebi quarto-linux-amd64.deb 
+RUN gdebi --non-interactive quarto-linux-amd64.deb
+
+RUN quarto check
 # RUN rm quarto.tar.gz
 # RUN ln -s /opt/quarto/${QUARTO_VERSION}/bin/quarto /usr/local/bin/quarto

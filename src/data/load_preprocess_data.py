@@ -61,7 +61,11 @@ def load_and_preprocess_raw_complaints_data(
         raw_complaint_df = pd.read_csv(file_path, dtype=col_dtype_corrections)
     elif (type(num_rows) == int) & (type(skip_rows) == int):
         raw_complaint_df = pd.read_csv(
-            file_path, dtype=col_dtype_corrections, nrows=num_rows, skiprows=skip_rows
+            file_path,
+            dtype=col_dtype_corrections,
+            header=0,
+            nrows=num_rows,
+            skiprows=range(1, skip_rows + 1),  # ensure header remains for column names
         )
     else:
         raise ValueError(
@@ -120,16 +124,19 @@ def load_processed_complaints_data(
 
     Example
     -------
-    raw_df = load_processed_complaints_data(
-        os.path.join(os.pardir, "data", "raw", "complaints.csv")
+    processed_df = load_processed_complaints_data(
+        os.path.join(os.pardir, "data", "processed", "preprocessed-complaints.csv")
     )
     # OR
-    raw_df = load_processed_complaints_data(
-        os.path.join(os.pardir, "data", "raw", "complaints.csv"),
+    processed_df = load_processed_complaints_data(
+        os.path.join(os.pardir, "data", "processed", "preprocessed-complaints.csv"),
         num_rows = 200000,
         skip_rows=100000
     )
     """
+
+    if type(file_path) is not str:
+        raise ValueError(f"Expected file_path as string, got {type(file_path)}")
 
     # tell pandas we know there are mixed int/string values in these columns
     # these are coerced after reading in
@@ -139,7 +146,11 @@ def load_processed_complaints_data(
         processed_df = pd.read_csv(file_path, dtype=col_dtype_corrections)
     elif (type(num_rows) == int) & (type(skip_rows) == int):
         processed_df = pd.read_csv(
-            file_path, dtype=col_dtype_corrections, nrows=num_rows, skiprows=skip_rows
+            file_path,
+            dtype=col_dtype_corrections,
+            header=0,
+            nrows=num_rows,
+            skiprows=range(1, skip_rows + 1),  # ensure header remains
         )
     else:
         raise ValueError(

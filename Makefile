@@ -2,7 +2,7 @@
 # author: Ty Andrews, Dhruvi Nishar, Luke Yang
 # date: 2022-11-30
 
-all: reports/final_report.html 
+all: reports/final_report.html reports/final_report.pdf
 
 all_windows: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
 	quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
@@ -25,9 +25,11 @@ reports/assets/results.csv reports/assets/model_performance.png: src/analysis/an
 
 # render report 
 # quarto is for Linux OS, quarto.cmd is for Windows OS if quarto is not in the PATH
-reports/final_report.html: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
+reports/final_report.html reports/final_report.pdf: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
 	-quarto render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
 	-quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
+	-quarto render reports/final_report.qmd --to pdf --data-dir="reports/final_report.pdf"
+	-quarto.cmd render reports/final_report.qmd --to pdf --data-dir="reports/final_report.pdf"
 
 clean: 
 	rm -f data/**/*.csv

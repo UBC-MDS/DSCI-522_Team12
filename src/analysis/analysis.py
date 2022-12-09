@@ -26,6 +26,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
 
 cur_dir = os.getcwd()
 SRC_PATH = cur_dir[
@@ -82,7 +83,7 @@ def main(data_filepath, out_filepath):
         train_df.drop(columns=["consumer_disputed"]),
         train_df["consumer_disputed"],
     )
-    # X_test, y_test = test_df.drop(columns= ['consumer_disputed']), train_df['consumer_disputed']
+    X_test, y_test = test_df.drop(columns= ['consumer_disputed']), test_df['consumer_disputed']
 
     categorical_features = [
         "product",
@@ -114,23 +115,23 @@ def main(data_filepath, out_filepath):
     cross_val_results = {}
     
     print('Analyzing baseline model...')
-    cross_val_results['dummy'] = \
+    cross_val_results['dummy'], pipe_dc = \
         train_dummy(X_train, y_train, preprocessor, scoring_metrics)
     
     print('Analyzing logistic regression model...')
-    cross_val_results['logreg'] = \
+    cross_val_results['logreg'], pipe_lr = \
         train_logreg(X_train, y_train, preprocessor, scoring_metrics)
     
     print('Analyzing naive bayes model...')
-    cross_val_results['bayes'] = \
+    cross_val_results['bayes'], pipe_nb = \
         train_nb(X_train, y_train, preprocessor, scoring_metrics)
     
     print('Analyzing svc model...')
-    cross_val_results['svc'] = \
+    cross_val_results['svc'], pipe_svc = \
         train_svc(X_train, y_train, preprocessor, scoring_metrics)
     
     print('Analyzing random forest model...')
-    cross_val_results['random forest'] = \
+    cross_val_results['random forest'], pipe_rf = \
         train_random_forest(X_train, y_train, preprocessor, scoring_metrics)
             
     res = pd.concat(cross_val_results, axis=1)
@@ -147,7 +148,26 @@ def main(data_filepath, out_filepath):
         x="Metric:O", y="Score:Q", color="Metric:N", column="Model:N"
     )
     save_chart(chart,os.path.join(out_filepath, "model_performance.png")) 
-
+    
+    # test set evaluation
+    
+    models = {'Dummy Classifier':pipe_dc, 
+          'Logistic Regression':pipe_lr, 
+          'Naive Bayes Classifier':pipe_nb,
+          'Support Vector Classifier':pipe_svc,
+          'Random Forest Classifier':pipe_rf}
+    scores = []
+    for model in models:
+        models[model].fit(X_train,y_train)
+        print('Analyzing with',model)
+        scores.append([accuracy_score(models[model].predict(X_test), y_test),
+              recall_score(models[model].predict(X_test), y_test),
+              precision_score(models[model].predict(X_test), y_test),
+              f1_score(models[model].predict(X_test), y_test)])
+    pd.DataFrame(scores, index=models.keys(), columns =['Accuracy','Recall','Precision','F1']).T\
+        .to_csv(os.path.join(out_filepath, "test_scores.csv"))
+    
+    
 def train_random_forest(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using random forest classifier
 
@@ -166,6 +186,8 @@ def train_random_forest(X_train, y_train, preprocessor, scoring_metrics):
     -------
     pd.DataFrame
         The scores for given metrics
+    sklearn.Pipeline
+        estimator
 
     Example
     -------
@@ -174,7 +196,7 @@ def train_random_forest(X_train, y_train, preprocessor, scoring_metrics):
     """
     pipe_rf = make_pipeline(preprocessor, RandomForestClassifier(class_weight='balanced', random_state=123))
     return pd.DataFrame(cross_validate(
-        pipe_rf, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+        pipe_rf, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T, pipe_rf
 
 def train_svc(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using SVC
@@ -194,7 +216,8 @@ def train_svc(X_train, y_train, preprocessor, scoring_metrics):
     -------
     pd.DataFrame
         The scores for given metrics
-
+    sklearn.Pipeline
+        estimator
     Example
     -------
     cross_val_results['test'] = \
@@ -202,7 +225,7 @@ def train_svc(X_train, y_train, preprocessor, scoring_metrics):
     """
     pipe_svc = make_pipeline(preprocessor, SVC(class_weight='balanced', random_state=123))
     return pd.DataFrame(cross_validate(
-        pipe_svc, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+        pipe_svc, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T, pipe_svc
 
 def train_nb(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using naive bayes classifier
@@ -222,6 +245,8 @@ def train_nb(X_train, y_train, preprocessor, scoring_metrics):
     -------
     pd.DataFrame
         The scores for given metrics
+    sklearn.Pipeline
+        estimator
 
     Example
     -------
@@ -230,7 +255,7 @@ def train_nb(X_train, y_train, preprocessor, scoring_metrics):
     """
     pipe_nb = make_pipeline(preprocessor, BernoulliNB(alpha = 0.1))
     return pd.DataFrame(cross_validate(
-        pipe_nb, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+        pipe_nb, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T, pipe_nb
 
 def train_logreg(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using logistic regression
@@ -250,6 +275,8 @@ def train_logreg(X_train, y_train, preprocessor, scoring_metrics):
     -------
     pd.DataFrame
         The scores for given metrics
+    sklearn.Pipeline
+        estimator
 
     Example
     -------
@@ -258,7 +285,7 @@ def train_logreg(X_train, y_train, preprocessor, scoring_metrics):
     """
     pipe_lr = make_pipeline(preprocessor, LogisticRegression(max_iter=10000,random_state=123, class_weight='balanced'))
     return pd.DataFrame(cross_validate(
-        pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T
+        pipe_lr, X_train, y_train, n_jobs=-1, scoring=scoring_metrics)).agg(['mean']).round(3).T, pipe_lr
 
 def train_dummy(X_train, y_train, preprocessor, scoring_metrics):
     """train and validate using dummy classifier
@@ -278,16 +305,17 @@ def train_dummy(X_train, y_train, preprocessor, scoring_metrics):
     -------
     pd.DataFrame
         The scores for given metrics
-
+    sklearn.Pipeline
+        estimator
+        
     Example
     -------
     cross_val_results['test'] = \
         train_dummy(X_train, y_train, preprocessor, scoring_metrics)
     """
     pipe_dc = make_pipeline(preprocessor, DummyClassifier())
-    pipe_dc.fit(X_train, y_train)
     return pd.DataFrame(cross_validate(
-        pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T
+        pipe_dc, X_train, y_train,scoring=scoring_metrics)).agg(['mean']).round(3).T, pipe_dc
 
 
 

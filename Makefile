@@ -2,7 +2,7 @@
 # author: Ty Andrews, Dhruvi Nishar, Luke Yang
 # date: 2022-11-30
 
-all: reports/final_report.html 
+all: reports/final_report.html reports/final_report.pdf
 
 all_windows: reports/final_report.qmd reports/assets/disputed_bar.png reports/assets/complaints_over_time_line.png reports/assets/results.csv reports/assets/model_performance.png 
 	quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"

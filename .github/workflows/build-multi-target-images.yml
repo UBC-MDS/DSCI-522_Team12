@@ -1,0 +1,78 @@
+# author: Ty Andrews
+# date: 2022-12-09
+
+name: 'Push customer_complaint_analyzer amd64 and arm64 Docker images to DockerHub' # Adapted from: https://blog.oddbit.com/post/2020-09-25-building-multi-architecture-im/
+
+# trigger on update to Dockerfile in main directory
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - 'Dockerfile'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # increment the image version number
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.52.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          RELEASE_BRANCHES: main
+        id: bump
+
+      # run the image build
+      - name: Prepare
+        id: prep
+        run: |
+          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/${GITHUB_REPOSITORY#*/}
+          VERSION=latest
+          SHORTREF=${GITHUB_SHA::8}
+          # If this is git tag, use the tag name as a docker tag
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          fi
+          # add the incremented release tag
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${{ steps.bump.outputs.new_tag }}" # ${DOCKER_IMAGE}:${SHORTREF}"
+          # If the VERSION looks like a version number, assume that
+          # this is the most recent version of the image and also
+          # tag it 'latest'.
+          if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            TAGS="$TAGS,${DOCKER_IMAGE}:latest"
+          fi
+          # Set output parameters.
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=docker_image::${DOCKER_IMAGE}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: all
+      # use buildx to generate amd64/arm64 builds
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+
+      # connect to dockerhub for publishing images
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # push to docker hub
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: ${{ steps.prep.outputs.tags }}

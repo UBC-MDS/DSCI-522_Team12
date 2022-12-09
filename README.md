@@ -25,7 +25,7 @@ We aim to answer the following inferential and/or predictive questions for our a
 - **What kind of complaint cannot be easily resolved?** 
 We will focus on the main question and target the subproblem with time permitting.
 
-We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `Ridge` regression. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
+We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `LogisticRegression`. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
 
 Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints that would give us more details about how and what kind of complaints raised the most disputes, which companies had the most disputes and how quickly they were resolved. We will first split the data into training and test set using a 80/20 split. In the training set, we will visualize if the class is imbalanced and then find appropriate strategies of model building in order to maximize our result accuracy. We also visualized the unique and null values that appear in our dataset in order to get a holistic idea of the data spread and then use that to proceed with the data preprocessing and cleaning strategies before we start training with our models.  
 
@@ -77,7 +77,7 @@ For the project to be correctly run, the following packages need to be installed
 Here is how the analysis process works:
 ![](reports/assets/analysis-pipeline-overview.jpg)
 
-### Docker Notes
+### Docker 
 
 ```
 docker run --rm -v "$(pwd):/home/jovyan/work" jl_test:0.1.0 make -C "/home/jovyan/work" all
@@ -88,7 +88,7 @@ docker build --tag jl_test:0.1.0 .
 ```
 
 ```
-docker run --rm -v "$(pwd):/home/jovyan/work" jl_test:0.2.0 make -C "/home/jovyan/work" all
+docker run --rm -v "$(pwd):/home/jovyan/work" jl_test:0.2.0 make -C "/home/jovyan/work" clean
 ```
 
 ### Make

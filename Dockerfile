@@ -6,9 +6,10 @@ FROM jupyter/datascience-notebook
 
 USER root
 
+# ensure packages are up to date on the system
 RUN sudo apt-get update
 
-# install the required packages
+# install the required ptyhon packages
 RUN pip install altair==4.2.0\
     docopt==0.6.2\
     numpy==1.23.5\
@@ -31,4 +32,5 @@ RUN sudo apt-get install gdebi-core -y
 
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
+# check quarto install worked correctly
 RUN quarto check

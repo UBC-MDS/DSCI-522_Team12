@@ -28,7 +28,6 @@ def test_raw_load_returns_dataframe():
 
     assert type(raw_df) == pd.DataFrame
 
-
 def test_processed_load_returns_dataframe():
 
     processed_df = load_processed_complaints_data(processed_data_path, num_rows=100)

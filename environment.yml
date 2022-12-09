@@ -16,4 +16,4 @@ dependencies:
   - pip==22.3.1
   - pip:
     - docopt-ng==0.8.1
-    - vl-convert-python
+    - vl-convert-python==0.5.*

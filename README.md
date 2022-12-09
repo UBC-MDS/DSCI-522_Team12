@@ -14,7 +14,7 @@ The final report is located [here](https://ubc-mds.github.io/customer_complaint_
 
 ## Data
 
-We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in in DATA.GOV and it is intended for public access and use. This is a collection of customer complaints regarding their purchased financial products and services that were sent to companies for response. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response. It contains important imformation about the issues and the sub-issues of the complaints, details about how the company responded to them and which states/zip codes they are from and whether the customer was disputed or not after the company's response.
+We aim to investigate, analyze, and report using the [customer complaint dataset](#References)[1]. This dataset is published in DATA.GOV and it is intended for public access and use. This is a collection of customer complaints regarding their purchased financial products and services that were sent to companies for response. It contains information on the summary and content of the complaint, the responses from the companies, and whether the customer disputed after companies response. It contains important information about the issues and the sub-issues of the complaints, details about how the company responded to them and which states/zip codes they are from and whether the customer was disputed or not after the company's response.
 
 ## Project proposal
 
@@ -25,13 +25,13 @@ We aim to answer the following inferential and/or predictive questions for our a
 - **What kind of complaint cannot be easily resolved?** 
 We will focus on the main question and target the subproblem with time permitting.
 
-We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `Ridge` regression. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
+We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `LogisticRegression`. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
 
-Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints that would give us more details about how and what kind of complaints raised the most disputes, which companies had the most disputes and how quickly they were resolved. We will first split the data into training and test set using a 80/20 split. In the training set, we will visualize if the class is imbalanced and then find appropriate strategies of model building in order to maximize our result accuracy. We also visualized the unique and null values that appear in our dataset in order to get a holistic idea of the data spread and then use that to proceed with the data preprocessing and cleaning strategies before we start training with our models.  
+Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints which would give us more details about how and what kind of complaints raised the most disputes, which companies had the most disputes and how quickly they were resolved. We will first split the data into training and test sets using an 80/20 split. In the training set, we will visualize if the class is imbalanced and then find appropriate strategies for model building in order to maximize our result accuracy. We also visualized the unique and null values that appear in our dataset in order to get a holistic idea of the data spread and then use that to proceed with the data preprocessing and cleaning strategies before we start training with our models.  
 
 ## Requirements
 
-The requirements for package installation is encompassed in the `requirements.txt` for `pip` users and and `environment.yml` for Conda users.
+The requirements for package installation are encompassed in the `requirements.txt` for `pip` users and and `environment.yml` for Conda users.
 
 To set up the environment in Conda run:
 ```
@@ -76,8 +76,20 @@ For the project to be correctly run, the following packages need to be installed
 Here is how the make file analysis process works:
 ![](Makefile.png)
 
-To start from the base repo and access, clean, analyze and generate the final reports you can run the following command from the
-root directory of this project. Note that it is OK to observe `UserWarning` during the model training:
+### Docker 
+
+To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started), clone the repository using Git, and run the following command from the root directory of this project:
+```
+    docker run --rm -v "$(pwd):/home/jovyan/customer_complaint_analyzer" 1124301416/customer_complaint_analyzer:v4.0 make -C "/home/jovyan/customer_complaint_analyzer" all
+```
+To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
+root directory of this project:
+```
+    docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor 1124301416/customer_complaint_analyzer:v4.0 make -C /home/rstudio/breast_cancer_predictor clean
+```
+
+### Make
+Note that it is OK to observe `UserWarning` during the model training:
 ```
 make
 ```

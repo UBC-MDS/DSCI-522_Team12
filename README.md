@@ -73,9 +73,8 @@ For the project to be correctly run, the following packages need to be installed
 
 ## Usage
 
-
-Here is how the analysis process works:
-![](reports/assets/analysis-pipeline-overview.jpg)
+Here is how the make file analysis process works:
+![](Makefile.png)
 
 To start from the base repo and access, clean, analyze and generate the final reports you can run the following command from the
 root directory of this project. Note that it is OK to observe `UserWarning` during the model training:

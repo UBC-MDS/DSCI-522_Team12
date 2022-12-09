@@ -1,0 +1,32 @@
+digraph G {
+n2[label="all", color="red"];
+n7[label="data/processed/preprocessed-complaints.csv", color="red"];
+n9[label="data/raw/complaints.csv", color="red"];
+n11[label="reports/assets/complaints_over_time_line.png", color="red"];
+n5[label="reports/assets/disputed_bar.png", color="red"];
+n14[label="reports/assets/model_performance.png", color="red"];
+n12[label="reports/assets/results.csv", color="red"];
+n3[label="reports/final_report.html", color="red"];
+n4[label="reports/final_report.qmd", color="green"];
+n13[label="src/analysis/analysis.py", color="green"];
+n6[label="src/data/generate_eda.py", color="green"];
+n10[label="src/data/get_dataset.py", color="green"];
+n8[label="src/data/load_preprocess_data.py", color="green"];
+n3 -> n2 ; 
+n9 -> n7 ; 
+n8 -> n7 ; 
+n10 -> n9 ; 
+n7 -> n11 ; 
+n6 -> n11 ; 
+n7 -> n5 ; 
+n6 -> n5 ; 
+n7 -> n14 ; 
+n13 -> n14 ; 
+n7 -> n12 ; 
+n13 -> n12 ; 
+n11 -> n3 ; 
+n5 -> n3 ; 
+n14 -> n3 ; 
+n12 -> n3 ; 
+n4 -> n3 ; 
+}

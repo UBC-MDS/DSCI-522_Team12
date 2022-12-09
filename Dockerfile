@@ -1,5 +1,5 @@
 # Docker file for the customer complaint analyzer project
-# Luke Yang, Dec, 2022
+# Luke Yang, Dec 9, 2022
 
 # use jupyter/datascience-notebook as the base image 
 FROM jupyter/datascience-notebook

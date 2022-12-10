@@ -1,3 +1,6 @@
+# author: Dhruvi Nishar
+# date: 2022-11-24
+
 """
 Generates EDA, tables and plots the pre-processed training data from the Customer Complaints
 (from https://files.consumerfinance.gov/ccdb/complaints.csv.zip) and saves the plots as pdf and png files

@@ -16,6 +16,7 @@ from src.data.get_dataset import main
 raw_data_path = os.path.join("data", "raw", "complaints.csv")
 url = 'https://files.consumerfinance.gov/ccdb/complaints.csv.zip'
 
+# test that normal urls works and invalid url does not work
 def test_response():
 
     response = main(
@@ -28,7 +29,7 @@ def test_response():
 
     assert (response) == 0 and failed_response == -1
 
-
+# test data is saved in the correct folder
 def test_file_downloaded():
 
     response = main(

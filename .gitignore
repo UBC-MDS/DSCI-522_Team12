@@ -141,8 +141,7 @@ dmypy.json
 complaints.csv
 complaints.zip
 
-
-
+# R and RStudio files
 .Rproj.user
 customer_complaint_analyzer.Rproj
 .Rhistory

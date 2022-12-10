@@ -88,6 +88,8 @@ def test_nb():
     )
     # test naive bernoulli regressor returns correct type
     assert type(df) == pd.DataFrame  and type(pipe) == Pipeline
+    
+    # test naive bernoulli regressor returns correct values for f1
     assert float(df.iloc[5]) >= 0.2
     
 def test_svc():
@@ -97,6 +99,7 @@ def test_svc():
     )
     # test svc regressor returns correct type
     assert type(df) == pd.DataFrame  and type(pipe) == Pipeline
+    # test svc regressor returns correct values for f1
     assert float(df.iloc[5]) >= 0.3
 
 

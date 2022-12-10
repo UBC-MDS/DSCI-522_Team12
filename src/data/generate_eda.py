@@ -190,6 +190,7 @@ def main(train, out_dir):
     save_table(unique_df, table_name="unique_df")
     print("Table Saved")
 
+
     # Plot 1: Generating Missing Values Plot
     print("Generating missing values plot")
     num_complaints = 2000
@@ -201,6 +202,7 @@ def main(train, out_dir):
     save_chart(missing_vals,os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))
     print("Plot saved")
 
+
     # Plot 2: Generating Complaints over time
     print("Generating complaints over time plot")
     complaints_over_time = plot_complaints_over_time(complaints_df)
@@ -210,6 +212,7 @@ def main(train, out_dir):
     save_chart(complaints_over_time,
                os.path.join(os.getcwd(), out_dir, "complaints_over_time_line.png"))
     print("Plot saved")
+
 
     # Plot 3: Generating Disputed Bar Chart
     print("Now generating consumer disputed bar chart")

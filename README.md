@@ -76,19 +76,38 @@ For the project to be correctly run, the following packages need to be installed
 Here is how the make file analysis process works:
 ![](Makefile.png)
 
-### Docker 
+### Run with Docker 
 
-To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started), clone the repository using Git, and run the following command from the root directory of this project:
+To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started). Install Docker desktop for your system from hewre following the instructions: Docker install. 
+
+1. Clone the repository using Git, and navigate to the repository so you're in the `customer_complaint_analyzer` directory.
+
+2. Next pull the docker container from Dockerhub:
 ```
-    docker run --rm -v "$(pwd):/home/jovyan/customer_complaint_analyzer" 1124301416/customer_complaint_analyzer:v4.0 make -C "/home/jovyan/customer_complaint_analyzer" all
+docker pull tannedruse101/customer_complaint_analyzer
 ```
-To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
+3. From inside the customer_complaint_analyzer directory in your terminal then run the following command:
+
+On Windows: 
+```
+docker run --rm -v /$(pwd):/home/jovyan/customer_complaint_analyzer tannedruse101/customer_complaint_analyzer make -C //home/jovyan/customer_complaint_analyzer all
+```
+On Mac
+```
+    docker run --rm -v "$PWD:/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C "/home/jovyan/customer_complaint_analyzer" all
+```
+4. To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
 root directory of this project:
+On Windows: 
 ```
-    docker run --rm -v /$(pwd):/home/rstudio/breast_cancer_predictor 1124301416/customer_complaint_analyzer:v4.0 make -C /home/rstudio/breast_cancer_predictor clean
+docker run --rm -v /$(pwd):/home/jovyan/customer_complaint_analyzer tannedruse101/customer_complaint_analyzer make -C //home/jovyan/customer_complaint_analyzer clean
+```
+On Mac
+```
+docker run --rm -v "$PWD:/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C "/home/jovyan/customer_complaint_analyzer" clean
 ```
 
-### Make
+### Run Analysis with Make
 Note that it is OK to observe `UserWarning` during the model training:
 ```
 make

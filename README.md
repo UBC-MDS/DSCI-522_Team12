@@ -54,28 +54,12 @@ To output a pip formatted `requirements.txt` use the following command to genera
 pip list --format=freeze > requirements.txt
 ```
 
-## Dependencies
-For the project to be correctly run, the following packages need to be installed. If the steps from the above could not be executed corrected, please make sure you have the following packages available in your environment by manual installation:
-
-  - Python 3.10.8 and Python packages:
-      - altair==4.2.0
-      - numpy==1.23.5
-      - pandas==1.4.4
-      - pytest==7.2.0
-      - requests==2.28.1
-      - scikit-learn==1.1.3
-      - docopt-ng==0.8.1
-  - R version 4.2.1 and R packages:
-      - tidyverse==1.3.2
-  - [GNU make 4.3](https://downloads.sourceforge.net/project/ezwinports/make-4.3-without-guile-w32-bin.zip)
-  - [quarto CLI](https://quarto.org/docs/get-started/)
-
 
 ## Usage
 
 Here is how the make file analysis process works:
 ![](Makefile.png)
-
+There are two ways of replicating the analysis:
 ### Run with Docker 
 
 To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started). Install Docker desktop for your system from hewre following the instructions: Docker install. 
@@ -108,7 +92,25 @@ docker run --rm -v "$PWD:/home/jovyan/customer_complaint_analyzer" tannedruse101
 ```
 
 ### Run Analysis with Make
-Note that it is OK to observe `UserWarning` during the model training:
+
+For the project to be correctly run using `make`, the following packages need to be installed. If the steps from the above could not be executed corrected, please make sure you have the following packages available in your environment by manual installation:
+#### Dependencies
+
+  - Python 3.10.8 and Python packages:
+      - altair==4.2.0
+      - numpy==1.23.5
+      - pandas==1.4.4
+      - pytest==7.2.0
+      - requests==2.28.1
+      - scikit-learn==1.1.3
+      - docopt-ng==0.8.1
+  - R version 4.2.1 and R packages:
+      - tidyverse==1.3.2
+  - [GNU make 4.3](https://downloads.sourceforge.net/project/ezwinports/make-4.3-without-guile-w32-bin.zip)
+  - [quarto CLI](https://quarto.org/docs/get-started/)
+
+
+The following command will execute the sequence of analysis. Note that it is OK to observe `UserWarning` during the model training:
 ```
 make
 ```
@@ -116,27 +118,6 @@ Running the following command from the
 root directory of this project could clean up the analysis to its initial state:
 ```
 make clean
-```
-If the single `make` command did not work, we here also provide a step-by-step prodecure on how to reproduce the analysis:
-
-```
-# Accessing and downloading the raw data
-python src/data/get_dataset.py --url=https://files.consumerfinance.gov/ccdb/complaints.csv.zip
-
-# Cleaning & preprocessing the raw data
-python src/data/load_preprocess_data.py --raw_path="data/raw/complaints.csv" --output_path="data/processed/preprocessed-complaints.csv"
-
-# Generating the EDA results 
-python src/data/generate_eda.py --train=data/processed/preprocessed-complaints.csv --out_dir=reports/assets
-
-# Running the analysis
-python src/analysis/analysis.py --data_filepath=data/processed/preprocessed-complaints.csv --out_filepath=reports/assets
-
-# Genrating the final report
-# ON windows where quarto.exe is not found in path from git bash
-quarto.cmd render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
-# Or on Mac/Linux with Quarto in path
-quarto render reports/final_report.qmd --to html --data-dir="reports/final_report.html"
 ```
 
 ## Contributing

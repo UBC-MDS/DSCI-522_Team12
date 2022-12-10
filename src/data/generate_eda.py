@@ -44,6 +44,7 @@ def save_table(table, table_name):
         index=False,
     )
 
+# function that returns the unique and null table
 def gen_unique_null_table(complaints_df):
     """
     Generates a data frame with the unique and null values of 
@@ -64,6 +65,7 @@ def gen_unique_null_table(complaints_df):
     unique_df["unique_count"] = complaints_df.nunique().reset_index()[0]
     return unique_df
 
+# function that plots and returns the missing values
 def plot_missing_values(complaints_df, num_complaints):
     """
     Plots and returns missing values in the dataframe
@@ -111,6 +113,7 @@ def plot_missing_values(complaints_df, num_complaints):
 
     return missing_vals
 
+# function that plots and returns the complaints over time
 def plot_complaints_over_time(complaints_df):
     """
     Plots the complaints of the consumers over time
@@ -142,6 +145,7 @@ def plot_complaints_over_time(complaints_df):
 
     return complaints_over_time
 
+# function that plots and returns the disputed customer bar chart
 def plot_disputed_bar(target):
     """
     Returns the bar chart of disputed customers
@@ -168,7 +172,7 @@ def plot_disputed_bar(target):
 
     return disputed_cust
 
-
+# Main function that compiles the EDA report together
 def main(train, out_dir):
     """
     Main function that saves some EDA plots and tables into the assets folder

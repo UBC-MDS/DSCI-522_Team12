@@ -38,7 +38,6 @@ from src.utils.utils import *
 from src.data.load_preprocess_data import load_processed_complaints_data
 
 warnings.filterwarnings("ignore")
-opt = docopt(__doc__)
 
 
 def main(data_filepath, out_filepath):
@@ -320,4 +319,5 @@ def train_dummy(X_train, y_train, preprocessor, scoring_metrics):
 
 
 if __name__ == "__main__":
+    opt = docopt(__doc__)
     main(opt["--data_filepath"], opt["--out_filepath"])

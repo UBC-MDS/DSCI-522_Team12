@@ -44,33 +44,34 @@ def save_table(table, table_name):
         index=False,
     )
 
-
-def main(train, out_dir):
+def gen_unique_null_table(complaints_df):
     """
-    Main function that saves some EDA plots and tables into the assets folder
+    Generates a data frame with the unique and null values of 
+    the columns and the data fields
 
     Args:
-        train (string): path of the train data
-        out_dir (string): path where the results need to be stored
+        complaints_df (pd.DataFrame()): 
+            The processed datafra,e
+
+    Returns:
+        pd.DataFrame(): 
+            Data frame with unique and null values of the columns
     """
 
-    if out_dir is None:
-        out_dir = os.path.join("results", "assets")
-    complaints_df = load_processed_complaints_data(train)
-
-    # Table 1: Saves the unique and valid values
     unique_df = pd.DataFrame()
     unique_df["columns"] = complaints_df.columns
     unique_df["valid_count"] = complaints_df.count(axis=0).reset_index()[0]
     unique_df["unique_count"] = complaints_df.nunique().reset_index()[0]
+    return unique_df
 
-    print("Saving the Table in the \assets\tables folder")
-    save_table(unique_df, table_name="unique_df")
-    print("Table Saved")
+def plot_missing_values(complaints_df, num_complaints):
+    """_summary_
 
-    # Plot 1: Missing Values Plot
-    print("Generating missing values plot")
-    num_complaints = 2000
+    Args:
+        complaints_df (_type_): _description_
+        num_complaints (_type_): _description_
+    """
+
     alt.data_transformers.enable("data_server")
     na_val_df = (
         complaints_df.tail(num_complaints).isna().reset_index().melt(id_vars="index")
@@ -99,7 +100,43 @@ def main(train, out_dir):
         )
         .properties(width=min(500, complaints_df.tail(num_complaints).shape[0]))
     )
+    return missing_vals
+
+def complaints_over_time():
+    pass
+
+def disputed_bar():
+    pass
+
+
+def main(train, out_dir):
+    """
+    Main function that saves some EDA plots and tables into the assets folder
+
+    Args:
+        train (string): path of the train data
+        out_dir (string): path where the results need to be stored
+    """
+
+    if out_dir is None:
+        out_dir = os.path.join("results", "assets")
+    complaints_df = load_processed_complaints_data(train)
+
+    # Table 1: Generates the unique and valid values
+    unique_df = gen_unique_null_table(complaints_df)
+
+    # Saving the generated table
+    print("Saving the Table in the assets->tables folder")
+    save_table(unique_df, table_name="unique_df")
+    print("Table Saved")
+
+    # Plot 1: Generating Missing Values Plot
+    print("Generating missing values plot")
+    num_complaints = 2000
+    missing_vals = plot_missing_values(complaints_df, num_complaints)
     print("Plot Generated")
+
+    # Saving the missing values plot
     print("Saving the Missing Values plot")
     save_chart(missing_vals,os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))
     print("Plot saved")

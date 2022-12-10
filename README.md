@@ -21,9 +21,7 @@ We want to answer the following inferential and/or predictive questions for our 
 - **What kind of complaint cannot be easily resolved?** 
 We will focus on the main question and target the subproblem with time permitting.
 
-We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `LogisticRegression`. Given the size of the data, it might be challenging to apply complex models to train in the time we have and the resources we can use. We may try complex models with a partition of the dataset to see the performance of other models and compare our results.
-
-Our exploratory analysis will mainly look into the company's responses rather than the customer's complaints which would give us more details about how and what kind of complaints raised the most disputes, which companies had the most disputes and how quickly they were resolved. We will first split the data into training and test sets using an 80/20 split. In the training set, we will visualize if the class is imbalanced and then find appropriate strategies for model building in order to maximize our result accuracy. We also visualized the unique and null values that appear in our dataset in order to get a holistic idea of the data spread and then use that to proceed with the data preprocessing and cleaning strategies before we start training with our models.  
+We plan to analyze the data using a mix of tabular and natural language processing tools like the bag-of-words representation using a `CountVectorizer()` and apply proper numerical or categorical transformations to the customer's responses. We plan to construct the classification model using scalable models like `Naive Bayes` or `LogisticRegression`. The analysis scripts can be found in the `src` directory and the html report is supplied below.
 
 
 ## Report
@@ -33,7 +31,7 @@ The final report is located [here](https://ubc-mds.github.io/customer_complaint_
 
 ## Usage
 
-Here is how the make file analysis process works:
+Here is how the make analysis process works:
 ![](Makefile.png)
 There are two ways of replicating the analysis:
 ### Run with Docker 
@@ -42,30 +40,19 @@ To start from the base repo and access, clean, analyze and generate the final re
 
 1. Clone the repository using Git, and navigate to the repository so you're in the `customer_complaint_analyzer` directory.
 
-2. Next pull the docker container from Dockerhub:
-```
-docker pull tannedruse101/customer_complaint_analyzer
-```
-3. From inside the customer_complaint_analyzer directory in your terminal then run the following command:
+2. From inside the customer_complaint_analyzer directory in your terminal then run the following command:
 
-On Windows: 
 ```
-docker run --rm -v /$(pwd):/home/jovyan/customer_complaint_analyzer tannedruse101/customer_complaint_analyzer make -C //home/jovyan/customer_complaint_analyzer all
+docker run --rm -v '/$(pwd):/home/jovyan/customer_complaint_analyzer' tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' all
 ```
-On Mac
-```
-    docker run --rm -v "$PWD:/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C "/home/jovyan/customer_complaint_analyzer" all
-```
-4. To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
+
+To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
 root directory of this project:
-On Windows: 
+
 ```
-docker run --rm -v /$(pwd):/home/jovyan/customer_complaint_analyzer tannedruse101/customer_complaint_analyzer make -C //home/jovyan/customer_complaint_analyzer clean
+docker run --rm -v '/$(pwd):/home/jovyan/customer_complaint_analyzer' tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' clean
 ```
-On Mac
-```
-docker run --rm -v "$PWD:/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C "/home/jovyan/customer_complaint_analyzer" clean
-```
+
 
 ### Run Analysis with Make
 

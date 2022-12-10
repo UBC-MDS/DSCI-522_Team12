@@ -135,7 +135,7 @@ def main(train, out_dir):
     num_complaints = 2000
     missing_vals = plot_missing_values(complaints_df, num_complaints)
     print("Plot Generated")
-
+    
     # Saving the missing values plot
     print("Saving the Missing Values plot")
     save_chart(missing_vals,os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))

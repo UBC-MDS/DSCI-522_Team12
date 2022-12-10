@@ -152,7 +152,7 @@ def plot_disputed_bar(target):
 
     Returns:
         altair chart: 
-            Bar chart of disputed customers
+            Plot of the Bar chart of disputed customers
     """
 
     disputed_cust = (

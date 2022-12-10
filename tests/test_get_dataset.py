@@ -7,7 +7,6 @@ cur_dir = os.getcwd()
 src_path = cur_dir[
     : cur_dir.index("customer_complaint_analyzer") + len("customer_complaint_analyzer")
 ]
-print(src_path)
 if src_path not in sys.path:
     sys.path.append(src_path)
 

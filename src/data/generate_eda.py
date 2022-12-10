@@ -51,7 +51,7 @@ def gen_unique_null_table(complaints_df):
 
     Args:
         complaints_df (pd.DataFrame()): 
-            The processed datafra,e
+            The processed dataframe
 
     Returns:
         pd.DataFrame(): 
@@ -65,11 +65,19 @@ def gen_unique_null_table(complaints_df):
     return unique_df
 
 def plot_missing_values(complaints_df, num_complaints):
-    """_summary_
+    """
+    Plots and returns missing values in the dataframe
 
     Args:
-        complaints_df (_type_): _description_
-        num_complaints (_type_): _description_
+        complaints_df (pd.DataFrame()): 
+            The pre-processed dataframe
+        
+        num_complaints (int):
+            Number of complaints to consider
+
+    Returns:
+        altair chart: 
+            Plots missing values in the dataframe
     """
 
     alt.data_transformers.enable("data_server")
@@ -100,13 +108,65 @@ def plot_missing_values(complaints_df, num_complaints):
         )
         .properties(width=min(500, complaints_df.tail(num_complaints).shape[0]))
     )
+
     return missing_vals
 
-def complaints_over_time():
-    pass
+def plot_complaints_over_time(complaints_df):
+    """
+    Plots the complaints of the consumers over time
 
-def disputed_bar():
-    pass
+    Args:
+        complaints_df (pd.DataFrame()): 
+            The pre-processed dataframe
+
+    Returns:
+        altair chart: 
+            Plot of complaints over time
+    """
+
+    num_complaints = (
+        complaints_df.resample("M", on="date_received")
+        .agg({"date_received": "size"})
+        .rename(columns={"date_received": "num_complaints"})
+        .reset_index()
+    )
+    complaints_over_time = (
+        alt.Chart(num_complaints, title="Monthly Complaints are Spiking in 2022")
+        .mark_line()
+        .encode(
+            x=alt.X("date_received:T", title="Date Complaints Received"),
+            y=alt.Y("num_complaints:Q", title="No. of Monthly Complaints"),
+        )
+        .properties(width=700, height=400)
+    )
+
+    return complaints_over_time
+
+def plot_disputed_bar(target):
+    """
+    Returns the bar chart of disputed customers
+
+    Args:
+        target (pd.DataFrame()): 
+            Target column of the processed dataframe
+
+    Returns:
+        altair chart: 
+            Bar chart of disputed customers
+    """
+
+    disputed_cust = (
+        alt.Chart(target, title="Majority of Complaints are Not Disputed")
+        .mark_bar()
+        .encode(
+            y=alt.Y("consumer_disputed:O", title="Consumer Disputed"),
+            x=alt.X("count:Q", title="No. of Complaints"),
+            color=alt.Color("consumer_disputed:O", legend=None),
+        )
+        .properties(width=600, height=300)
+    )
+
+    return disputed_cust
 
 
 def main(train, out_dir):
@@ -135,50 +195,31 @@ def main(train, out_dir):
     num_complaints = 2000
     missing_vals = plot_missing_values(complaints_df, num_complaints)
     print("Plot Generated")
-    
+
     # Saving the missing values plot
     print("Saving the Missing Values plot")
     save_chart(missing_vals,os.path.join(os.getcwd(), out_dir, "missing_values_plot.png"))
     print("Plot saved")
 
-    # Plot 2: Complaints over time
+    # Plot 2: Generating Complaints over time
     print("Generating complaints over time plot")
-    num_complaints = (
-        complaints_df.resample("M", on="date_received")
-        .agg({"date_received": "size"})
-        .rename(columns={"date_received": "num_complaints"})
-        .reset_index()
-    )
-    complaints_over_time = (
-        alt.Chart(num_complaints, title="Monthly Complaints are Spiking in 2022")
-        .mark_line()
-        .encode(
-            x=alt.X("date_received:T", title="Date Complaints Received"),
-            y=alt.Y("num_complaints:Q", title="No. of Monthly Complaints"),
-        )
-        .properties(width=700, height=400)
-    )
+    complaints_over_time = plot_complaints_over_time(complaints_df)
+
+    # Saving plots generated over time
     print("Plot generated - now saving it")
     save_chart(complaints_over_time,
                os.path.join(os.getcwd(), out_dir, "complaints_over_time_line.png"))
     print("Plot saved")
 
-    # Plot 3: Disputed Bar Chart
+    # Plot 3: Generating Disputed Bar Chart
     print("Now generating consumer disputed bar chart")
     target = pd.DataFrame(complaints_df.value_counts("consumer_disputed")).reset_index()
     target.columns = ["consumer_disputed", "count"]
-    disputed_cust = (
-        alt.Chart(target, title="Majority of Complaints are Not Disputed")
-        .mark_bar()
-        .encode(
-            y=alt.Y("consumer_disputed:O", title="Consumer Disputed"),
-            x=alt.X("count:Q", title="No. of Complaints"),
-            color=alt.Color("consumer_disputed:O", legend=None),
-        )
-        .properties(width=600, height=300)
-    )
+    disputed_cust = plot_disputed_bar(target)
+
+    # Saving the generated plot
     print("Plot generated - now saving it in the assets folder")
-    save_chart(disputed_cust,os.path.join(os.getcwd(), out_dir, "disputed_bar.png"))
+    save_chart(disputed_cust, os.path.join(os.getcwd(), out_dir, "disputed_bar.png"))
     print("Plot saved")
 
 

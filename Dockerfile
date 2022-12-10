@@ -34,3 +34,5 @@ RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # check quarto install worked correctly
 RUN quarto check
+
+RUN sudo apt-get install lmodern

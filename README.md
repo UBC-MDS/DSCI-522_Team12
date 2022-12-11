@@ -36,21 +36,21 @@ Here is how the make analysis process works:
 There are two ways of replicating the analysis:
 ### Run with Docker 
 
-To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started). Install Docker desktop for your system from hewre following the instructions: Docker install. 
+To start from the base repo and access, clean, analyze and generate the final reports, you can use [Docker](https://www.docker.com/get-started). Install Docker desktop for your system and execute the following steps
 
 1. Clone the repository using Git, and navigate to the repository so you're in the `customer_complaint_analyzer` directory.
 
 2. From inside the customer_complaint_analyzer directory in your terminal then run the following command:
 
 ```
-docker run --rm -v '/$(pwd):/home/jovyan/customer_complaint_analyzer' tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' all
+docker run --rm -v "/$(pwd):/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' all
 ```
 
 To reset the repo to a clean state, with no intermediate or results in files, run the following command at the command line/terminal from the
 root directory of this project:
 
 ```
-docker run --rm -v '/$(pwd):/home/jovyan/customer_complaint_analyzer' tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' clean
+docker run --rm -v "/$(pwd):/home/jovyan/customer_complaint_analyzer" tannedruse101/customer_complaint_analyzer make -C '//home/jovyan/customer_complaint_analyzer' clean
 ```
 
 

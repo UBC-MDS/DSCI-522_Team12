@@ -110,7 +110,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [1] Publisher Consumer Financial Protection Bureau. (2020, November 10). Consumer complaint database. Catalog. Retrieved November 18, 2022, from https://catalog.data.gov/dataset/consumer-complaint-database 
 
-
 </div>
 
 </div>

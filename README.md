@@ -31,7 +31,7 @@ The final report is located [here](https://ubc-mds.github.io/customer_complaint_
 
 ## Usage
 
-Here is how the make analysis process works:
+Here is how the `make` analysis process works:
 ![](Makefile.png)
 There are two ways of replicating the analysis:
 ### Run with Docker 
@@ -71,7 +71,7 @@ For the project to be correctly run using `make`, the following packages need to
   - [GNU make 4.3](https://downloads.sourceforge.net/project/ezwinports/make-4.3-without-guile-w32-bin.zip)
   - [quarto CLI](https://quarto.org/docs/get-started/)
 
-The requirements for package installation are encompassed in the `requirements.txt` for `pip` users and and `environment.yml` for Conda users.
+The requirements for package installation are encompassed in the `requirements.txt` for `pip` users and `environment.yml` for Conda users.
 
 To set up the environment in Conda run:
 ```
@@ -82,7 +82,6 @@ Or for `pip`:
 ```
 pip install -r requirements.txt
 ```
-
 
 The following command will execute the sequence of analysis. Note that it is OK to observe `UserWarning` during the model training:
 ```
